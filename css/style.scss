@@ -1,20 +1,40 @@
-// Custom.scss
-// Option A: Include all of Bootstrap
-
-// Include any default variable overrides here (though functions won't be available)
+// FONTS
 @font-face {
   font-family: "SegoeScript";
   src: url("../fonts/segoesc.ttf");
 }
 
+//ANIMATIONS
+
+@keyframes bounce {
+  0%,
+  25%,
+  50%,
+  75%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-12px);
+  }
+}
+
+// VARIABLES
+
 $primary: #1c1d21;
 $background: #26272c;
 $red: #d52941;
 $white: #f3f3f3;
+$blue: #5295cb;
+
+// IMPORT BOOTSTRAP HERE
 
 @import "../node_modules/bootstrap/scss/bootstrap";
 
-// Then add additional custom code here
+// CUSTOM CSS AFTER BOOTSTRAP (use !important for override)
 body {
   background-color: $background;
 }
@@ -22,11 +42,6 @@ body {
 .nav-item {
   font-family: SegoeScript;
 }
-
-//.nav-link {
-//  color: $white !important;
-//  font-size: 16pt;
-//}
 
 .navbar-nav .nav-item .nav-link {
   color: $white;
@@ -50,3 +65,35 @@ body {
 .navbar-toggler {
   z-index: 1;
 }
+
+section {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scroll-snap-align: start;
+}
+
+.scroll-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.landing-page {
+  flex-direction: column;
+  justify-content: space-evenly !important;
+}
+
+section.landing-page > svg {
+  color: $red;
+  animation: bounce 2s infinite linear;
+  display: inline-block;
+  position: relative;
+}
+
+.two {
+  display: block;
+}
+
+// @ Design Copyright Alex Ressa and The Students of UPT @ //
