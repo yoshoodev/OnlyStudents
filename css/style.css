@@ -11307,6 +11307,21 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #26272c;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: #26272c;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #d52941;
+}
+
 body {
   background-color: #26272c;
 }
