@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/dist/css/aos.css" />
     <script src="/dist/js/swup.min.js"></script>
-
+    <script src="/dist/js/panelsnap.umd.js"></script>
     <title>OnlyStudents</title>
   </head>
   <body>
     <main id="swup" class="transition-fade">
-      <section class="landing-page">
+      <section class="landing-page" id="nobgmine">
         <img
           src="/assets/biglogo.png"
           style="max-width: 80%; height: auto"
@@ -39,13 +39,10 @@
         </svg>
       </section>
 
-      <section
-        class="first d-flex"
-        data-aos="fade-up"
-        data-aos-duration="1000"
-        id="bgmine"
-      >
+      <section class="first d-flex" id="nobgmine">
         <div
+          data-aos="fade-up"
+          data-aos-duration="1000"
           class="card bg-primary mx-auto mx-md-5"
           style="max-height: 80vh; min-width: 40vw; max-width: 80vw"
         >
@@ -110,6 +107,8 @@
         </div>
 
         <div
+          data-aos="fade-in"
+          data-aos-duration="1000"
           class="
             test
             d-md-flex
@@ -155,6 +154,143 @@
           </p>
         </div>
       </section>
+      <section id="nobgmine" class="register">
+        <div
+          data-aos="fade-up"
+          data-aos-duration="1000"
+          class="card bg-primary mx-auto mx-md-5 regcard"
+          style="
+            min-width: 60vw;
+            max-width: 80vw;
+            margin-bottom: 5rem;
+            margin-top: 5rem;
+          "
+        >
+          <div class="card-body">
+            <h2
+              class="
+                card-title
+                text-white text-center
+                rounded-pill
+                mt-3
+                user-select-none
+              "
+            >
+              Register at
+              <span>Only</span>Students
+            </h2>
+            <form class="d-flex justify-content-evenly mt-5 flex-wrap">
+              <div class="mb-3 text-center user-select-none">
+                <label for="registeremailform" class="form-label text-white"
+                  >Email address</label
+                >
+                <input
+                  type="email"
+                  class="form-control rounded-pill w-50 mx-auto form-lable2"
+                  id="registeremailform"
+                  aria-describedby="emailCase"
+                />
+                <div
+                  id="emailHelp"
+                  class="form-text user-select-none d-sm-block"
+                >
+                  We'll never share your email with anyone else.
+                </div>
+              </div>
+              <div class="mb-3 text-center">
+                <label
+                  for="registeremailrepeat"
+                  class="form-label text-white user-select-none"
+                  >Repeat Email address</label
+                >
+                <input
+                  type="email"
+                  class="form-control rounded-pill w-50 mx-auto form-lable2"
+                  id="registeremailrepeat"
+                />
+              </div>
+              <div class="mb-3 text-center">
+                <label
+                  for="userform"
+                  class="form-label text-white user-select-none"
+                  >Username</label
+                >
+                <input
+                  type="text"
+                  class="form-control rounded-pill w-50 mx-auto form-lable2"
+                  style=""
+                  id="userform"
+                />
+              </div>
+              <div class="mb-3 text-center">
+                <label
+                  for="nameform"
+                  class="form-label text-white user-select-none"
+                  >Name</label
+                >
+                <input
+                  type="text"
+                  class="form-control rounded-pill w-50 mx-auto form-lable2"
+                  style=""
+                  id="nameform"
+                />
+                <div
+                  id="nicknameHelp"
+                  class="form-text user-select-none d-sm-block"
+                >
+                  We don't need nor want your full name !
+                </div>
+              </div>
+              <div class="mb-3 text-center">
+                <label
+                  for="password1"
+                  class="form-label text-white user-select-none"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  class="form-control rounded-pill w-50 mx-auto form-lable2"
+                  style=""
+                  id="password1"
+                />
+              </div>
+              <div class="mb-3 text-center">
+                <label
+                  for="password2"
+                  class="form-label text-white user-select-none"
+                  >Repeat Password</label
+                >
+                <input
+                  type="password"
+                  class="form-control rounded-pill w-50 mx-auto form-lable2"
+                  id="password2"
+                />
+              </div>
+            </form>
+            <button
+              class="btn btn-primary rounded-pill registerbtn"
+              id="registerbtn"
+            >
+              SIGN-UP
+            </button>
+          </div>
+        </div>
+
+        <div
+          data-aos="fade-in"
+          data-aos-duration="1000"
+          class="
+            test
+            d-md-flex
+            justify-content-start
+            text-white
+            flex-column
+            align-items-center
+            mx-4
+          "
+          style="height: 50vh"
+        ></div>
+      </section>
     </main>
 
     <script src="/dist/js/bootstrap.bundle.min.js"></script>
@@ -166,7 +302,7 @@
     <script type="text/javascript">
       $("#arrow-down").click(function () {
         const el = document.querySelector(".first");
-        el.scrollIntoView({ block: "center" });
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
       });
     </script>
     <script>
