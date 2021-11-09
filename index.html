@@ -361,6 +361,75 @@
         }
       }
 
+      function validateEmptyFormReg() {
+        var a = document.getElementById("registeremailform").value;
+        var b = document.getElementById("registeremailrepeat").value;
+        var c = document.getElementById("userform").value;
+        var d = document.getElementById("nameform").value;
+        var e = document.getElementById("password1").value;
+        var f = document.getElementById("password2").value;
+        if (
+          a == null ||
+          a == "" ||
+          b == null ||
+          b == "" ||
+          c == null ||
+          c == "" ||
+          d == null ||
+          d == "" ||
+          e == null ||
+          e == "" ||
+          f == null ||
+          f == ""
+        ) {
+          return false;
+        } else {
+          if (e == f && a == b) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+
+      document.getElementById("registerbtn").onclick = function () {
+        var mail = document.getElementById("registeremailform").value;
+        var mail2 = document.getElementById("registeremailrepeat").value;
+        var user = document.getElementById("userform").value;
+        var name = document.getElementById("nameform").value;
+        var password1 = document.getElementById("password1").value;
+        var password2 = document.getElementById("password2").value;
+
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            // User is signed in, see docs for a list of available properties
+            // https://firebase.google.com/docs/reference/js/firebase.User
+            const uid = user.uid;
+            console.log("Signed in  " + uid + "cannot create new account !");
+            alert("You are already signed in, You should'nt be on this page!");
+            // ...
+          } else {
+            console.log("User is not Signed In, account creation possible");
+
+            if (validateEmptyFormReg() == true) {
+              createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                  // Signed in
+                  const user = userCredential.user;
+                  // ...
+                })
+                .catch((error) => {
+                  const errorCode = error.code;
+                  const errorMessage = error.message;
+                  // ..
+                });
+            } else {
+              alert("Complete all registration fields !");
+            }
+          }
+        });
+      };
+
       document.getElementById("loginbtn").onclick = function () {
         var email = document.getElementById("emailform").value;
         var password = document.getElementById("passwordform").value;
