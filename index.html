@@ -9,24 +9,6 @@
     />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/dist/css/aos.css" />
-    <script></script>
-    <script src="/dist/js/panelsnap.umd.js" defer></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var defaultOptions = {
-          container: document.body,
-          panelSelector: "> section",
-          directionThreshold: 150,
-          delay: 0,
-          duration: 100,
-          easing: function (t) {
-            return t;
-          },
-        };
-
-        new PanelSnap(defaultOptions);
-      });
-    </script>
     <title>OnlyStudents</title>
   </head>
   <body>
@@ -40,7 +22,7 @@
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 512 512"
-        height="20vmin"
+        height="8em"
         xml:space="preserve"
         fill="currentColor"
         id="arrow-down"
@@ -54,11 +36,16 @@
       </svg>
     </section>
 
-    <section class="first d-flex">
+    <section
+      class="first d-flex"
+      data-aos="fade-up"
+      data-aos-duration="1000"
+      id="bgmine"
+    >
       <div
         class="card bg-primary mx-auto mx-md-5"
-        data-aos="fade-in"
         style="max-height: 80vh; min-width: 40vw; max-width: 80vw"
+        id="logincard"
       >
         <div class="card-body">
           <h2
@@ -117,7 +104,44 @@
         </div>
       </div>
 
-      <div class="test mx-5 d-none"></div>
+      <div
+        class="
+          test
+          d-md-flex
+          justify-content-start
+          text-white
+          flex-column
+          align-items-center
+          mx-4
+        "
+        style="height: 50vh"
+      >
+        <h1 style="font-size: 40pt; text-shadow: #000 4px 0 15px">
+          Welcome to <span>Only</span>Students
+        </h1>
+        <h4
+          style="
+            width: 50%;
+            text-shadow: #000 4px 0 15px;
+            margin-top: 10pt;
+            text-align: center;
+            flex-grow: 2;
+          "
+        >
+          OnlyStudents is a platform developed by the Students of Timisoara for
+          all of the students in the world to connect and enjoy quality content
+          together. Registering is not necessary but recommended !
+        </h4>
+        <p
+          style="
+            font-size: 10pt;
+            font-family: SegoeScript;
+            text-shadow: #000 4px 0 15px;
+          "
+        >
+          OnlyStudents with love from Romania since 2021
+        </p>
+      </div>
     </section>
 
     <script src="/dist/js/bootstrap.bundle.min.js"></script>
@@ -128,7 +152,8 @@
     </script>
     <script type="text/javascript">
       $("#arrow-down").click(function () {
-        window.scrollTo(0, document.body.scrollHeight);
+        const el = document.querySelector(".first");
+        el.scrollIntoView({ block: "center" });
       });
     </script>
   </body>
