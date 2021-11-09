@@ -24,9 +24,11 @@
 
 // VARIABLES
 
-$primary: #1c1d21;
-$background: #26272c;
+$font-family: SegoeScript;
+$primary: #26272c;
+$background: #1c1d21;
 $red: #d52941;
+$rgba-red: rgba(213, 41, 65, 1);
 $white: #f3f3f3;
 $blue: #5295cb;
 
@@ -92,13 +94,6 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  scroll-snap-align: start;
-}
-
-.scroll-container {
-  scroll-snap-type: y proximity;
-  overflow-y: scroll;
-  height: 100vh;
 }
 
 .landing-page {
@@ -113,8 +108,84 @@ section.landing-page > svg {
   position: relative;
 }
 
-.two {
+.first {
   display: block;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: start;
+}
+
+.test {
+  background-color: $blue;
+  display: none;
+  border-color: $red;
+  height: 80vh;
+  width: 100%;
+}
+
+.first > .card {
+  border-radius: 100px;
+  border-color: $primary;
+  //box-shadow: 0px 0px 25px 10px $red;
+  box-shadow: rgba(213, 41, 65, 0.6) 0px 0px 50px 4px;
+}
+
+.card-title > p {
+  color: $red !important;
+  font-weight: bold;
+  padding-bottom: 6px;
+}
+
+.first > .card > .card-body > .card-title {
+  //background-color: $background !important;
+  height: fit-content;
+  margin-top: 2vh;
+  margin-bottom: 4vh;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5 5 5 5;
+}
+
+.form-control {
+  transition: all 1s ease-out;
+}
+
+.form-control:focus {
+  width: 100% !important;
+}
+
+.form-control:hover {
+  width: 100% !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.loginbtn {
+  position: absolute !important;
+  background-color: #1c1d21 !important;
+  color: #f3f3f3 !important;
+  padding-left: 25px !important;
+  padding-right: 25px !important;
+  width: fit-content !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 3rem !important;
+  text-align: center !important;
+  height: auto;
+  font-size: 5vh;
+  border-width: 3px;
+  border-color: $background;
+  box-shadow: rgba(213, 41, 65, 0.2) 0px 0px 30px 4px;
+  transition: all ease-out 0.2s;
+}
+
+.loginbtn:hover {
+  color: $red !important;
+  transition: all ease-in-out 0.2s;
+  border-color: $background;
+  border-width: 0px;
+  box-shadow: rgba(213, 41, 65, 0.5) 0px 0px 50px 4px;
 }
 
 // @ Design Copyright Alex Ressa and The Students of UPT @ //

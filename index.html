@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="node_modules/aos/dist/aos.css" />
     <title>OnlyStudents</title>
   </head>
   <body>
@@ -14,12 +15,11 @@
           src="/assets/biglogo.png"
           style="max-width: 80%; height: auto"
           alt=""
-          class="user-select-none"
+          class="user-select-none big-img"
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
-          width="auto"
           height="20vmin"
           xml:space="preserve"
           fill="currentColor"
@@ -32,15 +32,68 @@
           />
         </svg>
       </section>
-      <section class="two">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
-        blanditiis dolorum esse explicabo molestias maiores placeat
-        reprehenderit, natus possimus nobis cumque voluptatum repellat,
-        dignissimos aut odio magni. Similique, odio non?
+      <div data-aos="fade-in">
+      <section
+        class="first d-md-flex"
+      >
+        <div
+          class="card bg-primary mx-auto mx-md-5"
+          style="height: 80vh; min-width: 40vw; max-width: 80vw"
+        >
+          <div class="card-body">
+            <h2 class="card-title text-white text-center rounded-pill w-75">
+              Login to
+              <p>OnlyStudents</p>
+            </h2>
+            <form>
+              <div class="mb-3 text-center">
+                <label for="exampleInputEmail1" class="form-label text-white"
+                  >Email address</label
+                >
+                <input
+                  type="email"
+                  class="form-control rounded-pill w-50 mx-auto"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                />
+                <div id="emailHelp" class="form-text">
+                  We'll never share your email with anyone else.
+                </div>
+              </div>
+              <div class="mb-3 text-center">
+                <label for="exampleInputPassword1" class="form-label text-white"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  class="form-control rounded-pill w-50 mx-auto"
+                  id="exampleInputPassword1"
+                />
+              </div>
+            </form>
+            <button
+              type="submit"
+              class="
+                btn btn-primary
+                d-block
+                position-absolute
+                rounded-pill
+                loginbtn
+              "
+            >
+              Login
+            </button>
+          </div>
+        </div>
+        <div class="test mx-5 d-none"></div>
       </section>
     </div>
 
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script src="node_modules/aos/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
   </body>
 </html>
