@@ -11400,11 +11400,7 @@ section.landing-page > svg {
 }
 
 .first > .card > .card-body > .card-title {
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  height: auto;
   margin-left: auto;
   margin-right: auto;
   padding: 5 5 5 5;
@@ -11427,11 +11423,7 @@ section.landing-page > svg {
   position: absolute !important;
   background-color: #1c1d21 !important;
   color: #f3f3f3 !important;
-  padding-left: 25px !important;
-  padding-right: 25px !important;
-  width: -webkit-fit-content !important;
-  width: -moz-fit-content !important;
-  width: fit-content !important;
+  width: 10em !important;
   margin-left: auto !important;
   margin-right: auto !important;
   left: 0 !important;
@@ -11439,7 +11431,8 @@ section.landing-page > svg {
   bottom: 2rem !important;
   text-align: center !important;
   height: auto;
-  font-size: 2em;
+  font-size: large;
+  font-family: SegoeScript;
   border-width: 3px;
   border-color: #1c1d21;
   box-shadow: rgba(213, 41, 65, 0.2) 0px 0px 30px 4px;
