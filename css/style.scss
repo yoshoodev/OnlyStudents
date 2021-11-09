@@ -4,6 +4,11 @@
   src: url("../fonts/segoesc.ttf");
 }
 
+@font-face {
+  font-family: "Minion";
+  src: url("../fonts/Minion\ Variable\ Concept.otf");
+}
+
 //ANIMATIONS
 
 @keyframes bounce {
@@ -24,7 +29,7 @@
 
 // VARIABLES
 
-$font-family: SegoeScript;
+$font-family-base: Minion;
 $primary: #26272c;
 $background: #1c1d21;
 $red: #d52941;
@@ -106,12 +111,21 @@ section.landing-page > svg {
   animation: bounce 2s infinite linear;
   display: inline-block;
   position: relative;
+  //cursor: pointer !important;
+  transition: all ease-in-out 0.25s;
+}
+
+section.landing-page > svg:hover {
+  color: $red-100;
+  cursor: pointer !important;
+  transition: all ease-in 0.2s;
 }
 
 .first {
   display: flex;
   align-items: center;
   justify-content: left;
+  font-size: 1.3em;
 }
 
 .test {
@@ -130,9 +144,14 @@ section.landing-page > svg {
 }
 
 .card-title > p {
-  color: $red !important;
-  font-weight: bold;
+  color: $white !important;
+  //font-weight: bold;
   padding-bottom: 6px;
+}
+
+.card-title > p > span {
+  font-family: SegoeScript;
+  color: $red;
 }
 
 .first > .card > .card-body > .card-title {
@@ -147,15 +166,23 @@ section.landing-page > svg {
 
 .form-control {
   transition: all 1s ease-out;
+  height: 2.5rem;
 }
 
 .form-control:focus {
-  width: 100% !important;
+  width: 80% !important;
+  box-shadow: inset 0px 0px 0px 2px $red;
+  transition: all ease-in-out 0.2s;
+  border-style: none;
+  border-color: $red;
 }
 
 .form-control:hover {
-  width: 100% !important;
+  width: 80% !important;
   transition: all 0.2s ease-in-out;
+  box-shadow: inset 0px 0px 0px 2px $red;
+  border-style: none;
+  border-color: $red;
 }
 
 .loginbtn {
