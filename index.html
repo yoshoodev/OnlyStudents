@@ -9,140 +9,153 @@
     />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/dist/css/aos.css" />
+    <script src="/dist/js/swup.min.js"></script>
+
     <title>OnlyStudents</title>
   </head>
   <body>
-    <section class="landing-page">
-      <img
-        src="/assets/biglogo.png"
-        style="max-width: 80%; height: auto"
-        alt=""
-        class="user-select-none big-img"
-      />
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 512 512"
-        height="8em"
-        xml:space="preserve"
-        fill="currentColor"
-        id="arrow-down"
-      >
-        <path
-          d="M390.467 305.313h-89.279V45.189C301.189 20.271 280.918 0 256 0s-45.189 20.271-45.189 45.189v260.126h-89.279c-19.911 0-36.109 16.198-36.109 36.109 0 9.644 3.755 18.712 10.576 25.534l134.468 134.466C237.288 508.244 246.356 512 256 512s18.712-3.756 25.534-10.577l134.468-134.468c6.818-6.82 10.575-15.888 10.575-25.533 0-19.91-16.199-36.109-36.11-36.109zm11.111 47.22L267.112 487c-2.969 2.967-6.914 4.602-11.111 4.602s-8.143-1.634-11.11-4.602L110.424 352.534a15.618 15.618 0 0 1-4.602-11.111c0-8.663 7.048-15.711 15.711-15.711v-.001h99.478c5.632 0 10.199-4.566 10.199-10.199V45.189c0-13.669 11.121-24.79 24.79-24.79 13.669 0 24.79 11.121 24.792 24.79v270.325c0 5.633 4.567 10.199 10.199 10.199h99.478c8.663 0 15.711 7.048 15.711 15.711 0 4.196-1.635 8.143-4.602 11.109z"
+    <main id="swup" class="transition-fade">
+      <section class="landing-page">
+        <img
+          src="/assets/biglogo.png"
+          style="max-width: 80%; height: auto"
+          alt=""
+          class="user-select-none big-img"
         />
-        <path
-          d="M349.906 380.13c-3.985-3.983-10.441-3.983-14.425 0l-2.266 2.266c-3.983 3.984-3.983 10.442 0 14.425a10.165 10.165 0 0 0 7.212 2.987c2.611 0 5.22-.995 7.213-2.987l2.266-2.266c3.983-3.984 3.983-10.442 0-14.425zM324.526 405.345c-3.985-3.984-10.441-3.983-14.425 0l-59.666 59.666c-3.983 3.983-3.983 10.441 0 14.424a10.165 10.165 0 0 0 7.212 2.987c2.611 0 5.22-.996 7.213-2.986l59.666-59.666c3.983-3.984 3.983-10.442 0-14.425z"
-        />
-      </svg>
-    </section>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          height="8em"
+          xml:space="preserve"
+          fill="currentColor"
+          id="arrow-down"
+        >
+          <path
+            d="M390.467 305.313h-89.279V45.189C301.189 20.271 280.918 0 256 0s-45.189 20.271-45.189 45.189v260.126h-89.279c-19.911 0-36.109 16.198-36.109 36.109 0 9.644 3.755 18.712 10.576 25.534l134.468 134.466C237.288 508.244 246.356 512 256 512s18.712-3.756 25.534-10.577l134.468-134.468c6.818-6.82 10.575-15.888 10.575-25.533 0-19.91-16.199-36.109-36.11-36.109zm11.111 47.22L267.112 487c-2.969 2.967-6.914 4.602-11.111 4.602s-8.143-1.634-11.11-4.602L110.424 352.534a15.618 15.618 0 0 1-4.602-11.111c0-8.663 7.048-15.711 15.711-15.711v-.001h99.478c5.632 0 10.199-4.566 10.199-10.199V45.189c0-13.669 11.121-24.79 24.79-24.79 13.669 0 24.79 11.121 24.792 24.79v270.325c0 5.633 4.567 10.199 10.199 10.199h99.478c8.663 0 15.711 7.048 15.711 15.711 0 4.196-1.635 8.143-4.602 11.109z"
+          />
+          <path
+            d="M349.906 380.13c-3.985-3.983-10.441-3.983-14.425 0l-2.266 2.266c-3.983 3.984-3.983 10.442 0 14.425a10.165 10.165 0 0 0 7.212 2.987c2.611 0 5.22-.995 7.213-2.987l2.266-2.266c3.983-3.984 3.983-10.442 0-14.425zM324.526 405.345c-3.985-3.984-10.441-3.983-14.425 0l-59.666 59.666c-3.983 3.983-3.983 10.441 0 14.424a10.165 10.165 0 0 0 7.212 2.987c2.611 0 5.22-.996 7.213-2.986l59.666-59.666c3.983-3.984 3.983-10.442 0-14.425z"
+          />
+        </svg>
+      </section>
 
-    <section
-      class="first d-flex"
-      data-aos="fade-up"
-      data-aos-duration="1000"
-      id="bgmine"
-    >
-      <div
-        class="card bg-primary mx-auto mx-md-5"
-        style="max-height: 80vh; min-width: 40vw; max-width: 80vw"
-        id="logincard"
+      <section
+        class="first d-flex"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+        id="bgmine"
       >
-        <div class="card-body">
-          <h2
-            class="
-              card-title
-              text-white text-center
-              rounded-pill
-              mt-md-3
-              user-select-none
-            "
-          >
-            Login to
-            <p><span>Only</span>Students</p>
-          </h2>
-          <form>
-            <div class="mb-3 text-center user-select-none">
-              <label for="exampleInputEmail1" class="form-label text-white"
-                >Email address</label
-              >
-              <input
-                type="email"
-                class="form-control rounded-pill w-50 mx-auto"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-              />
-              <div id="emailHelp" class="form-text user-select-none">
-                We'll never share your email with anyone else.
+        <div
+          class="card bg-primary mx-auto mx-md-5"
+          style="max-height: 80vh; min-width: 40vw; max-width: 80vw"
+        >
+          <div class="card-body" style="max-height: 80vh">
+            <h2
+              class="
+                card-title
+                text-white text-center
+                rounded-pill
+                mt-md-3
+                user-select-none
+              "
+            >
+              Login to
+              <p><span>Only</span>Students</p>
+            </h2>
+            <form>
+              <div class="mb-3 text-center user-select-none mb-sm-0 mt-sm-0">
+                <label for="exampleInputEmail1" class="form-label text-white"
+                  >Email address</label
+                >
+                <input
+                  type="email"
+                  class="form-control rounded-pill w-50 mx-auto"
+                  id="emailform"
+                  aria-describedby="emailHelp"
+                />
+                <div
+                  id="emailHelp"
+                  class="form-text user-select-none d-sm-block"
+                >
+                  We'll never share your email with anyone else.
+                </div>
               </div>
-            </div>
-            <div class="mb-3 text-center">
-              <label
-                for="exampleInputPassword1"
-                class="form-label text-white user-select-none"
-                >Password</label
-              >
-              <input
-                type="password"
-                class="form-control rounded-pill w-50 mx-auto"
-                style="margin-bottom: 20vh"
-                id="exampleInputPassword1"
-              />
-            </div>
-          </form>
-          <button
-            type="submit"
-            class="
-              btn btn-primary
-              d-block
-              position-absolute
-              rounded-pill
-              loginbtn
+              <div class="mb-3 text-center">
+                <label
+                  for="exampleInputPassword1"
+                  class="form-label text-white user-select-none"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  class="form-control rounded-pill w-50 mx-auto"
+                  style="margin-bottom: 20rem"
+                  id="passwordform"
+                />
+              </div>
+            </form>
+            <button
+              class="
+                btn btn-primary
+                d-block
+                position-absolute
+                rounded-pill
+                loginbtn
+              "
+              id="loginbtn"
+            >
+              Login
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="
+            test
+            d-md-flex
+            justify-content-start
+            text-white
+            flex-column
+            align-items-center
+            mx-4
+          "
+          style="height: 50vh"
+        >
+          <h1
+            style="
+              font-size: 40pt;
+              text-shadow: #000 4px 0 15px;
+              text-align: center;
             "
           >
-            Login
-          </button>
+            Welcome to <span>Only</span>Students
+          </h1>
+          <h4
+            style="
+              width: auto;
+              text-shadow: #000 4px 0 15px;
+              margin-top: 20pt;
+              margin-bottom: 30pt;
+              text-align: centre;
+              flex-grow: 2;
+            "
+          >
+            OnlyStudents is a platform developed by the Students of Timisoara
+            for all of the students in the world to connect and enjoy quality
+            content together. Registering is not necessary but recommended !
+          </h4>
+          <p
+            style="
+              font-size: 10pt;
+              font-family: SegoeScript;
+              text-shadow: #000 4px 0 15px;
+            "
+          >
+            OnlyStudents with love from Romania since 2021
+          </p>
         </div>
-      </div>
-
-      <div
-        class="
-          test
-          d-md-flex
-          justify-content-start
-          text-white
-          flex-column
-          align-items-center
-          mx-4
-        "
-        style="height: 50vh"
-      >
-        <h1 style="font-size: 40pt; text-shadow: #000 4px 0 15px">
-          Welcome to <span>Only</span>Students
-        </h1>
-        <h4
-          style="
-            width: 50%;
-            text-shadow: #000 4px 0 15px;
-            margin-top: 10pt;
-            text-align: center;
-            flex-grow: 2;
-          "
-        >
-          OnlyStudents is a platform developed by the Students of Timisoara for
-          all of the students in the world to connect and enjoy quality content
-          together. Registering is not necessary but recommended !
-        </h4>
-        <p
-          style="
-            font-size: 10pt;
-            font-family: SegoeScript;
-            text-shadow: #000 4px 0 15px;
-          "
-        >
-          OnlyStudents with love from Romania since 2021
-        </p>
-      </div>
-    </section>
+      </section>
+    </main>
 
     <script src="/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-latest.js"></script>
@@ -155,6 +168,91 @@
         const el = document.querySelector(".first");
         el.scrollIntoView({ block: "center" });
       });
+    </script>
+    <script>
+      const swup = new Swup();
+    </script>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-analytics.js";
+      import {
+        signInWithEmailAndPassword,
+        getAuth,
+        setPersistence,
+        browserSessionPersistence,
+        browserLocalPersistence,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js";
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyD33F_vo2zofnh_-g6dk4I3eSawDcBkTL8",
+        authDomain: "onlystudents-c006b.firebaseapp.com",
+        projectId: "onlystudents-c006b",
+        storageBucket: "onlystudents-c006b.appspot.com",
+        messagingSenderId: "664309698186",
+        appId: "1:664309698186:web:ca6a730b014e6e21316773",
+        measurementId: "G-PTCTDT0BBV",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth();
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          const uid = user.uid;
+          console.log("Signed in  " + uid);
+          // ...
+        } else {
+          // User is signed out
+          console.log("User is not Signed IN");
+          // ...
+        }
+      });
+
+      function validateForm() {
+        var a = document.getElementById("emailform").value;
+        var b = document.getElementById("passwordform").value;
+        if ((a == null || a == "", b == null || b == "")) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+
+      document.getElementById("loginbtn").onclick = function () {
+        var email = document.getElementById("emailform").value;
+        var password = document.getElementById("passwordform").value;
+
+        if (validateForm() == true) {
+          signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+              const user = userCredential.user;
+              setPersistence(auth, browserLocalPersistence);
+              console.log("Login successful");
+
+              //Redirect to homepage
+            })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+
+              if (errorCode != null) {
+                alert("Wrong Username or Password");
+              }
+            });
+        } else {
+          alert(
+            "Something went wrong with your username or password. Check if you typed right !  "
+          );
+          return false;
+        }
+      };
     </script>
   </body>
 </html>
