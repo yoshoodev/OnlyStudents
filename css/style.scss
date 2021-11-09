@@ -206,7 +206,7 @@ section.landing-page > svg:hover {
   color: #f3f3f3 !important;
   //padding-left: 15px !important;
   //padding-right: 15px !important;
-  width: 10em !important;
+  width: 8em !important;
   margin-left: auto !important;
   margin-right: auto !important;
   left: 0 !important;
@@ -250,7 +250,7 @@ html.is-animating .transition-fade {
   display: none;
 }
 
-@media only screen and (max-height: 500px) {
+@media only screen and (max-height: 450px) {
   .loginbtn {
     position: absolute !important;
     background-color: #1c1d21 !important;
@@ -294,10 +294,6 @@ html.is-animating .transition-fade {
 
   .card-body > h2 {
     display: none;
-  }
-
-  .card-body {
-    height: 80vh !important;
   }
 }
 // @ Design Copyright Alex Ressa and The Students of UPT @ //
