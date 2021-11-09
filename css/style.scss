@@ -228,4 +228,11 @@ section.landing-page > svg:hover {
   box-shadow: rgba(213, 41, 65, 0.5) 0px 0px 50px 4px;
 }
 
+.loginbtn:focus {
+  border-width: 3px !important;
+  border-color: $background !important;
+  box-shadow: rgba(213, 41, 65, 0.5) 0px 0px 50px 4px !important;
+  transition: all ease-out 0.2s;
+}
+
 // @ Design Copyright Alex Ressa and The Students of UPT @ //

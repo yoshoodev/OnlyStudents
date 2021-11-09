@@ -11481,4 +11481,11 @@ section.landing-page > svg:hover {
   border-color: #1c1d21;
   border-width: 0px;
   box-shadow: rgba(213, 41, 65, 0.5) 0px 0px 50px 4px;
+}
+
+.loginbtn:focus {
+  border-width: 3px !important;
+  border-color: #1c1d21 !important;
+  box-shadow: rgba(213, 41, 65, 0.5) 0px 0px 50px 4px !important;
+  transition: all ease-out 0.2s;
 }/*# sourceMappingURL=style.css.map */
