@@ -11333,33 +11333,6 @@ body {
       scroll-snap-type: y mandatory !important;
 }
 
-.nav-item {
-  font-family: SegoeScript;
-}
-
-.navbar-nav .nav-item .nav-link {
-  color: #f3f3f3;
-  font-size: 16pt;
-}
-
-.navbar-nav .nav-item:hover .nav-link {
-  color: pink;
-}
-
-.active {
-  color: #d52941 !important;
-}
-
-.navbar-brand {
-  transform: translateX(-50%);
-  left: 50%;
-  position: absolute;
-}
-
-.navbar-toggler {
-  z-index: 1;
-}
-
 section {
   height: 100vh;
   display: flex;
@@ -11522,7 +11495,7 @@ section.landing-page > svg:hover {
 }
 
 .transition-fade {
-  transition: 0.1s;
+  transition: 0.3s;
   opacity: 1;
 }
 
@@ -11648,4 +11621,16 @@ html.is-animating .transition-fade {
   border-color: #26272c;
   box-shadow: rgba(213, 41, 65, 0.6) 0px 0px 50px 4px;
   overflow: hidden !important;
+}
+
+::-moz-placeholder {
+  text-align: center;
+}
+
+:-ms-input-placeholder {
+  text-align: center;
+}
+
+::placeholder {
+  text-align: center;
 }/*# sourceMappingURL=style.css.map */
