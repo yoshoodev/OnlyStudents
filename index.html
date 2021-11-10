@@ -117,6 +117,7 @@
             flex-column
             align-items-center
             mx-4
+            user-select-none
           "
           style="height: 50vh"
         >
@@ -141,7 +142,8 @@
           >
             OnlyStudents is a platform developed by the Students of Timisoara
             for all of the students in the world to connect and enjoy quality
-            content together. Registering is not necessary but recommended !
+            content together.
+            <p>Registering is not necessary but recommended !</p>
           </h4>
           <p
             style="
@@ -152,6 +154,17 @@
           >
             OnlyStudents with love from Romania since 2021
           </p>
+          <div style="margin-top: 3rem; text-shadow: black 10px 0 10px">
+            <h1 style="font-size: 55pt">
+              <button
+                class="registerbtn2"
+                id="registerbtn2"
+                style="display: none"
+              >
+                <span class="segoe" style="font-size: 55pt">Sign-Up</span>
+              </button>
+            </h1>
+          </div>
         </div>
       </section>
       <section id="nobgmine" class="register">
@@ -176,7 +189,7 @@
                 user-select-none
               "
             >
-              Register at
+              Sign-Up on
               <span>Only</span>Students
             </h2>
             <form class="d-flex justify-content-evenly mt-5 flex-wrap">
@@ -302,6 +315,10 @@
     <script type="text/javascript">
       $("#arrow-down").click(function () {
         const el = document.querySelector(".first");
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+      $("#registerbtn2").click(function () {
+        const el = document.querySelector(".register");
         el.scrollIntoView({ behavior: "smooth", block: "center" });
       });
     </script>

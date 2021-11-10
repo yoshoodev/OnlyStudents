@@ -11382,6 +11382,28 @@ section.landing-page > svg {
   transition: all ease-in-out 0.25s;
 }
 
+.segoe {
+  color: #d52941;
+  font-family: SegoeScript;
+}
+
+.registerbtn2 {
+  background-color: transparent;
+  border: none;
+  text-shadow: #000 4px 0 15px;
+  transition: all ease-out 0.3s;
+}
+
+.registerbtn2:hover {
+  text-shadow: #d52941 4px 0 15px;
+  transition: all ease-in-out 0.2s;
+}
+
+@media only screen and (min-width: 1150px) {
+  .registerbtn2 {
+    display: block !important;
+  }
+}
 section.landing-page > svg:hover {
   color: #f7d4d9;
   cursor: pointer !important;
@@ -11417,7 +11439,6 @@ section.landing-page > svg:hover {
   border-radius: 100px;
   border-color: #26272c;
   box-shadow: rgba(213, 41, 65, 0.6) 0px 0px 50px 4px;
-  overflow: hidden !important;
 }
 
 .card-title > p {
@@ -11566,12 +11587,13 @@ html.is-animating .transition-fade {
   min-width: 25vw;
 }
 
-@media only screen and (max-width: 500px) {
-  .register {
-    height: auto !important;
-    overflow-x: hidden !important;
-  }
+.register {
+  min-height: 100vh;
+  height: auto !important;
+  overflow-x: hidden !important;
+}
 
+@media only screen and (max-width: 500px) {
   body {
     max-height: auto !important;
     height: auto;
