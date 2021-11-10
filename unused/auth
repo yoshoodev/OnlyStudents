@@ -1,14 +1,39 @@
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    const uid = user.uid;
+    console.log("Signed in  " + uid);
+    // ...
+  } else {
+    // User is signed out
+    console.log("User is not Signed IN");
+    // ...
+  }
+});
 
-   onAuthStateChanged(auth, (user) => {
-        if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
-          const uid = user.uid;
-          console.log("Signed in  " + uid);
-          // ...
-        } else {
-          // User is signed out
-          console.log("User is not Signed IN");
-          // ...
-        }
-      });
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    const uid = user.uid;
+    console.log("Signed in  " + uid);
+    //window.location.href = "/home.html";
+    swup.loadPage({
+      url: "/home.html", // route of request (defaults to current url)
+      method: "GET", // method of request (defaults to "GET")
+      customTransition: "transition-fade", // name of your transition used for adding custom class to html element and choosing custom animation in swupjs (as setting data-swup-transition attribute on link)
+    });
+    // ...
+  } else {
+    // User is signed out
+    console.log("User is not Signed IN");
+    // ...
+  }
+});
+
+swup.loadPage({
+  url: "/home.html", // route of request (defaults to current url)
+  method: "GET", // method of request (defaults to "GET")
+  customTransition: "transition-fade", // name of your transition used for adding custom class to html element and choosing custom animation in swupjs (as setting data-swup-transition attribute on link)
+});

@@ -11441,6 +11441,7 @@ section.landing-page > svg:hover {
   transition: all 1s ease-out;
   height: 2.5rem;
   font-family: Arial, Helvetica, sans-serif;
+  min-width: 50%;
 }
 
 .form-control:focus {
@@ -11633,4 +11634,53 @@ html.is-animating .transition-fade {
 
 ::placeholder {
   text-align: center;
+}
+
+.swal2-container {
+  background-color: rgba(28, 29, 33, 0.8) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+          backdrop-filter: blur(5px) !important;
+  transition: all ease-in 0.2s !important;
+}
+
+.swal2-popup {
+  background-color: #26272c !important;
+  max-width: 80vw;
+  border-radius: 40px;
+}
+
+.swal2-confirm {
+  border-radius: 5rem !important;
+}
+
+.swal2-styled {
+  background-color: #d52941 !important;
+  font-family: SegoeScript !important;
+}
+
+.swal2-title {
+  color: #f3f3f3 !important;
+  font-family: SegoeScript !important;
+  font-weight: bold;
+  font-size: 3rem;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.swal2-html-container {
+  color: #f3f3f3 !important;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+html.swal2-shown,
+body.swal2-shown {
+  overflow-y: hidden !important;
 }/*# sourceMappingURL=style.css.map */
