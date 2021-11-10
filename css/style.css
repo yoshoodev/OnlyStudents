@@ -11564,7 +11564,7 @@ html.is-animating .transition-fade {
 .register {
   min-height: 100vh;
   height: auto !important;
-  overflow-x: hidden !important;
+  overflow: hidden !important;
 }
 
 @media only screen and (max-width: 500px) {

@@ -188,8 +188,8 @@ document.getElementById("registerbtn").onclick = function () {
 
     if (validateEmptyFormReg() == true) {
       comingfromreg = 1;
-      createUserWithEmailAndPassword(auth, email, password).then(
-        (userCredential) => {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
           console.log("Updating Username with " + username);
           updateProfile(userCredential.user, {
             displayName: username,
@@ -197,10 +197,7 @@ document.getElementById("registerbtn").onclick = function () {
             .then(() => {
               console.log("Updated: " + auth.currentUser.displayName);
             })
-            .catch((error) => {
-              // An error occurred
-              // ...
-            });
+            .catch((error) => {});
           console.log(auth.currentUser.displayName);
           Swal.fire({
             title: "Register Succesful",
@@ -214,8 +211,61 @@ document.getElementById("registerbtn").onclick = function () {
               redirect();
             }
           });
-        }
-      );
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          switch (errorCode) {
+            case "auth/invalid-email":
+              Swal.fire({
+                title: "Invalid Email",
+                text: "We think you got your email wrong !\nRecheck it ! (Tip: check after @)",
+                icon: "warning",
+                showCancelButton: false,
+                confirmButtonText: "Sure thing !",
+              });
+              break;
+
+            case "auth/weak-password":
+              Swal.fire({
+                title: "Weak Password",
+                text: "Weak Password !\nRecheck it ! (Tip: minimum length 6 characters)",
+                icon: "warning",
+                showCancelButton: false,
+                confirmButtonText: "Cheking now",
+              });
+              break;
+
+            case "auth/email-already-exists":
+              Swal.fire({
+                title: "Email Already Exists",
+                text: "You already signed up with this email!\nTry another one :D",
+                icon: "warning",
+                showCancelButton: false,
+                confirmButtonText: "OK BOSS",
+              });
+              break;
+
+            case "auth/email-already-in-use":
+              Swal.fire({
+                title: "Email Already In Use",
+                text: "You already signed up with this email!\nTry another one :D",
+                icon: "warning",
+                showCancelButton: false,
+                confirmButtonText: "OK BOSS",
+              });
+              break;
+
+            default:
+              Swal.fire({
+                title: "Ooopsie",
+                text: "Give this code to the developer\n)" + errorCode,
+                icon: "error",
+                showCancelButton: false,
+                confirmButtonText: "Call The DEVS",
+              });
+              break;
+          }
+        });
     } else {
     }
   }
