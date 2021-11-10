@@ -7,6 +7,7 @@ import {
   browserLocalPersistence,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 
 // Your web app's Firebase configuration
@@ -62,7 +63,39 @@ onAuthStateChanged(auth, (user) => {
 function validateForm() {
   var a = document.getElementById("emailform").value;
   var b = document.getElementById("passwordform").value;
-  if ((a == null || a == "", b == null || b == "")) {
+
+  if ((a == null || a == "") && (b == null || b == "")) {
+    Swal.fire({
+      title: "User and Pass",
+      text:
+        "We need those to log you in !" +
+        "\n" +
+        "Say what you want we don't care :D",
+      icon: "error",
+      showCancelButton: false,
+      confirmButtonText: "OK BOOMER",
+    });
+    return false;
+  } else if (b == null || b == "") {
+    Swal.fire({
+      title: "Password",
+      text:
+        "We need it to log you in !" +
+        "\n" +
+        "It's secret so don't share it ;)",
+      icon: "error",
+      showCancelButton: false,
+      confirmButtonText: "OK",
+    });
+    return false;
+  } else if (a == null || a == "") {
+    Swal.fire({
+      title: "Email",
+      text: "We need it to log you in !" + "\n" + "It's just an e-mail :D",
+      icon: "error",
+      showCancelButton: false,
+      confirmButtonText: "Sure",
+    });
     return false;
   } else {
     return true;
@@ -157,8 +190,18 @@ document.getElementById("registerbtn").onclick = function () {
       comingfromreg = 1;
       createUserWithEmailAndPassword(auth, email, password).then(
         (userCredential) => {
-          // Signed in
-          console.log("Firing Swal");
+          console.log("Updating Username with " + username);
+          updateProfile(userCredential.user, {
+            displayName: username,
+          })
+            .then(() => {
+              console.log("Updated: " + auth.currentUser.displayName);
+            })
+            .catch((error) => {
+              // An error occurred
+              // ...
+            });
+          console.log(auth.currentUser.displayName);
           Swal.fire({
             title: "Register Succesful",
             text: "You have succesfully registered",
@@ -196,24 +239,56 @@ document.getElementById("loginbtn").onclick = function () {
         const errorCode = error.code;
         const errorMessage = error.message;
 
-        if (errorCode != null) {
-          Swal.fire({
-            title: "Wrong Credentials",
-            text: "The credentials you provided are wrong",
-            icon: "warning",
-            showCancelButton: false,
-            confirmButtonText: "Sorry",
-          });
+        switch (errorCode) {
+          case "auth/user-not-found":
+            Swal.fire({
+              title: "User Not Found",
+              text: "Basically you don't exist for us.\nYou can go ahead and make an account now",
+              icon: "error",
+              showCancelButton: false,
+              confirmButtonText: "Sure :D",
+            });
+            break;
+          case "auth/wrong-password":
+            Swal.fire({
+              title: "Wrong Password",
+              text: "Come on you don't know your password ?\nYou can reset it here :  coming soon TM",
+              icon: "error",
+              showCancelButton: false,
+              confirmButtonText: "I got it !",
+            });
+            break;
+          case "auth/user-disabled":
+            Swal.fire({
+              title: "User Disabled",
+              text: "Did you get banned ? :d\nToo bad",
+              icon: "error",
+              showCancelButton: false,
+              confirmButtonText: "Fuck You !",
+            });
+            break;
+
+          case "auth/invalid-email":
+            Swal.fire({
+              title: "Invalid Email",
+              text: "We think you got your email wrong !\nRecheck it ! (Tip: check after @)",
+              icon: "error",
+              showCancelButton: false,
+              confirmButtonText: "Sure thing !",
+            });
+            break;
+          default:
+            Swal.fire({
+              title: "Oopsie",
+              text: "Take this code to the devs !\n " + errorCode,
+              icon: "error",
+              showCancelButton: false,
+              confirmButtonText: "Call the devs !",
+            });
+            break;
         }
       });
   } else {
-    Swal.fire({
-      title: "Validation Error",
-      text: "Unknown validation error",
-      icon: "error",
-      showCancelButton: false,
-      confirmButtonText: "Call the devs !",
-    });
     return false;
   }
 };

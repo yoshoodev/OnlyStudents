@@ -11678,6 +11678,9 @@ html.is-animating .transition-fade {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  content: "n";
+  white-space: pre-wrap;
+  text-align: center;
 }
 
 html.swal2-shown,
