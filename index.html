@@ -320,6 +320,7 @@
         browserLocalPersistence,
         onAuthStateChanged,
         createUserWithEmailAndPassword,
+        signOut,
       } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js";
 
       // Your web app's Firebase configuration
@@ -337,6 +338,20 @@
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);
       const auth = getAuth();
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          const uid = user.uid;
+          console.log("Signed in  " + uid);
+          // ...
+        } else {
+          // User is signed out
+          console.log("User is not Signed IN");
+          // ...
+        }
+      });
 
       function validateForm() {
         var a = document.getElementById("emailform").value;
@@ -391,7 +406,8 @@
           if (user) {
             // User is signed in, see docs for a list of available properties
             // https://firebase.google.com/docs/reference/js/firebase.User
-            const uid = user.uid;
+            var uid = user.uid;
+            var user = user;
             console.log("Signed in  " + uid + "cannot create new account !");
             alert("You are already signed-in, You should'nt be on this page!");
             // ...
@@ -421,36 +437,35 @@
         var email = document.getElementById("emailform").value;
         var password = document.getElementById("passwordform").value;
 
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            const uid = user.uid;
-            alert("Already signed in with account UID: " + uid);
+        if (null != null) {
+          alert("signed in");
+          return false;
+          throw "NonNull";
+        } else {
+          if (validateForm() == true) {
+            signInWithEmailAndPassword(auth, email, password)
+              .then((userCredential) => {
+                const user = userCredential.user;
+                setPersistence(auth, browserLocalPersistence);
+                console.log("Login successful");
+                throw "Success login";
+                //Redirect to homepage
+              })
+              .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                if (errorCode != null) {
+                  alert("Wrong Username or Password");
+                }
+              });
           } else {
-            if (validateForm() == true) {
-              signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                  const user = userCredential.user;
-                  setPersistence(auth, browserLocalPersistence);
-                  console.log("Login successful");
-
-                  //Redirect to homepage
-                })
-                .catch((error) => {
-                  const errorCode = error.code;
-                  const errorMessage = error.message;
-
-                  if (errorCode != null) {
-                    alert("Wrong Username or Password");
-                  }
-                });
-            } else {
-              alert(
-                "Something went wrong with your username or password. Check if you typed right !  "
-              );
-              return false;
-            }
+            alert(
+              "Something went wrong with your username or password. Check if you typed right !  "
+            );
+            return false;
           }
-        });
+        }
       };
     </script>
   </body>
