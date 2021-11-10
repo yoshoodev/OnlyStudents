@@ -338,20 +338,6 @@
       const app = initializeApp(firebaseConfig);
       const auth = getAuth();
 
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
-          const uid = user.uid;
-          console.log("Signed in  " + uid);
-          // ...
-        } else {
-          // User is signed out
-          console.log("User is not Signed IN");
-          // ...
-        }
-      });
-
       function validateForm() {
         var a = document.getElementById("emailform").value;
         var b = document.getElementById("passwordform").value;
@@ -394,11 +380,11 @@
       }
 
       document.getElementById("registerbtn").onclick = function () {
-        var mail = document.getElementById("registeremailform").value;
-        var mail2 = document.getElementById("registeremailrepeat").value;
+        var email = document.getElementById("registeremailform").value;
+        var email2 = document.getElementById("registeremailrepeat").value;
         var user = document.getElementById("userform").value;
         var name = document.getElementById("nameform").value;
-        var password1 = document.getElementById("password1").value;
+        var password = document.getElementById("password1").value;
         var password2 = document.getElementById("password2").value;
 
         onAuthStateChanged(auth, (user) => {
@@ -407,10 +393,10 @@
             // https://firebase.google.com/docs/reference/js/firebase.User
             const uid = user.uid;
             console.log("Signed in  " + uid + "cannot create new account !");
-            alert("You are already signed in, You should'nt be on this page!");
+            alert("You are already signed-in, You should'nt be on this page!");
             // ...
           } else {
-            console.log("User is not Signed In, account creation possible");
+            console.log("User is not signed-in, account creation possible");
 
             if (validateEmptyFormReg() == true) {
               createUserWithEmailAndPassword(auth, email, password)
@@ -435,29 +421,36 @@
         var email = document.getElementById("emailform").value;
         var password = document.getElementById("passwordform").value;
 
-        if (validateForm() == true) {
-          signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-              const user = userCredential.user;
-              setPersistence(auth, browserLocalPersistence);
-              console.log("Login successful");
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            const uid = user.uid;
+            alert("Already signed in with account UID: " + uid);
+          } else {
+            if (validateForm() == true) {
+              signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                  const user = userCredential.user;
+                  setPersistence(auth, browserLocalPersistence);
+                  console.log("Login successful");
 
-              //Redirect to homepage
-            })
-            .catch((error) => {
-              const errorCode = error.code;
-              const errorMessage = error.message;
+                  //Redirect to homepage
+                })
+                .catch((error) => {
+                  const errorCode = error.code;
+                  const errorMessage = error.message;
 
-              if (errorCode != null) {
-                alert("Wrong Username or Password");
-              }
-            });
-        } else {
-          alert(
-            "Something went wrong with your username or password. Check if you typed right !  "
-          );
-          return false;
-        }
+                  if (errorCode != null) {
+                    alert("Wrong Username or Password");
+                  }
+                });
+            } else {
+              alert(
+                "Something went wrong with your username or password. Check if you typed right !  "
+              );
+              return false;
+            }
+          }
+        });
       };
     </script>
   </body>
