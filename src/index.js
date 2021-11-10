@@ -282,8 +282,6 @@ document.getElementById("loginbtn").onclick = function () {
         setPersistence(auth, browserLocalPersistence);
         console.log("Login successful");
         redirect();
-        throw "Success login";
-        //Redirect to homepage
       })
       .catch((error) => {
         const errorCode = error.code;
