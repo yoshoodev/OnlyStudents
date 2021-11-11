@@ -391,3 +391,11 @@ document.getElementById("loginbtn").onclick = function () {
     return false;
   }
 };
+
+const node = document.getElementById("passwordform");
+node.addEventListener("keyup", ({ key }) => {
+  if (key === "Enter") {
+    //event.preventDefault();
+    document.getElementById("loginbtn").click();
+  }
+});
