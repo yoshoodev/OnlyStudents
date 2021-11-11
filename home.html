@@ -3,41 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, height=device-height, initial-scale=1"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="alternate icon" href="/assets/favicon.svg" />
+    <link rel="mask-icon" href="/assets/favicon.svg" color="#d52941" />
     <link rel="stylesheet" href="/css/home.css" />
-    <title>OnlyStudents</title>
-    <script src="/dist/js/swup.min.js"></script>
+    <link rel="stylesheet" href="/dist/css/animate.min.css" />
+    <title>OnlyStudents Home</title>
   </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary position-sticky">
-      <div class="container-fluid">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+
+  <body class="osbg" data-barba="wrapper">
+    <main data-barba="container" data-barba-namespace="home">
+      <nav class="navbar navbar-expand d-flex flex-sm-row" id="nobgmine">
+        <a
+          class="user-select-none rounded-pill bg-dark py-3 order-sm-0 logo"
+          href="home.html"
+          id="onlystudentslogo"
+          ><span style="font-family: SegoeScript; color: #d52941">Only</span
+          >Students</a
         >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <div id="username" class="usrname text-white">
-            USERNAME PLACEHOLDER
-          </div>
+        <div class="container-fluid flex-sm-row my-sm-0 justify-content-start">
+          <button
+            id="profilepic"
+            class="rounded-circle bg-dark text-white p-2 my-sm-0 icon mx-2"
+          ></button>
+          <div
+            id="username"
+            class="usrname text-white rounded-pill bg-dark p-2 my-sm-0"
+          ></div>
         </div>
-      </div>
-      <a class="navbar-brand user-select-none" href="home.html">
-        <img height="38px" src="/assets/logo.png" alt=""
-      /></a>
-      <button class="btn btn-primary d-lg-block" id="logoutbtn">LOG-OUT</button>
-    </nav>
-    <main class="osbg"></main>
+        <button class="btn btn-primary rounded-pill bg-dark" id="logoutbtn">
+          LOG-OUT
+        </button>
+      </nav>
+    </main>
+    <script src="/dist/js/sweetalert2.all.min.js"></script>
+    <script src="/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="dist/home.bundle.js"></script>
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    <script>
-      const swup = new Swup();
-    </script>
   </body>
 </html>

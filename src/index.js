@@ -1,4 +1,4 @@
-// Import the functions you need from the SDKs you need
+import Aos, { init } from "aos";
 import { initializeApp } from "firebase/app";
 import {
   signInWithEmailAndPassword,
@@ -9,6 +9,8 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+import Swup from "swup";
+// Import the functions you need from the SDKs you need
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -26,6 +28,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 var userauth = auth.currentUser;
+
+const swup = new Swup();
+
+Aos.init();
 
 var comingfromreg = 0;
 
