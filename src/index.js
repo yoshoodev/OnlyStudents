@@ -118,6 +118,34 @@ async function registerData(nameI, usernameI, emailI, uidI) {
   }
 }
 
+function isUserNameValid(username) {
+  /* 
+    Usernames can only have: 
+    - Lowercase Letters (a-z) 
+    - Numbers (0-9)
+    - Dots (.)
+    - Underscores (_)
+  */
+  const res = /^[a-z0-9_\.]+$/.exec(username);
+  const valid = !!res;
+  if (valid == true) {
+    return true;
+  } else {
+    Swal.fire({
+      title: "Username not valid",
+      text: ` Usernames can only have:
+      - Lowercase Letters (a-z) 
+      - Numbers (0-9)
+      - Dots (.)
+      - Underscores (_)`,
+      icon: "error",
+      showCancelButton: false,
+      confirmButtonText: "I will fix it !",
+    });
+    return false;
+  }
+}
+
 function validateEmptyFormReg() {
   var a = document.getElementById("registeremailform").value;
   var b = document.getElementById("registeremailrepeat").value;
@@ -202,7 +230,7 @@ document.getElementById("registerbtn").onclick = function () {
   } else {
     console.log("User is not signed-in, account creation possible");
 
-    if (validateEmptyFormReg() == true) {
+    if (validateEmptyFormReg() == true && isUserNameValid(username) == true) {
       comingfromreg = 1;
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {

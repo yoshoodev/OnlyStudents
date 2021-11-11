@@ -11,6 +11,7 @@ import barba from "@barba/core";
 import { gsap } from "gsap";
 import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
 import { OUser, userConverter } from "./userops";
+import Swal from "sweetalert2";
 
 Storage.prototype.setObject = function (key, value) {
   this.setItem(key, JSON.stringify(value));
@@ -165,6 +166,43 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+function isUserNameValid(username) {
+  /* 
+    Usernames can only have: 
+    - Lowercase Letters (a-z) 
+    - Numbers (0-9)
+    - Dots (.)
+    - Underscores (_)
+  */
+  const res = /^[a-z0-9_\.]+$/.exec(username);
+  const valid = !!res;
+  if (valid == true) {
+    return true;
+  } else {
+    Swal.fire({
+      title: "Username not valid",
+      text: ` Usernames can only have:
+      - Lowercase Letters (a-z) 
+      - Numbers (0-9)
+      - Dots (.)
+      - Underscores (_)`,
+      icon: "error",
+      showCancelButton: false,
+      confirmButtonText: "I will fix it !",
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          document.getElementById("profilepicture").click();
+          return false;
+        }
+      })
+      .catch((err) => {
+        return false;
+      });
+    return false;
+  }
+}
+
 document.getElementById("logoutbtn").onclick = function () {
   Swal.fire({
     title: "Are you sure?",
@@ -229,11 +267,13 @@ document.getElementById("profilepicture").onclick = function () {
       title: "Profile Info",
       html: `
       <img id="profileimg" src="https://avatars.dicebear.com/api/adventurer-neutral/default.svg" class="rounded-circle profilepicswal"></img>
-      <h2 style="margin-top: 0; margin-bottom: 1rem;">Name : <input class="form-control rounded-pill" type="text" placeholder="name" id="namef" value="name" disabled></input></h2>
-    <h2 style="margin-top: 0">Username: <input class="form-control rounded-pill" type="text" placeholder="username" id="uname" value="username" disabled></h2>
+      <h2 style="margin-top: 0; margin-bottom: 1rem;">Name : <input class="form-control rounded-pill" type="text" placeholder="name" id="namef" value="name"></input></h2>
+      <h2 style="margin-top: 0">Username: <input class="form-control rounded-pill" type="text" placeholder="username" id="uname" value="username"></h2>
+      <button id="btnsave" class="swal2-confirm swal2-styled">SAVE</button>
     `,
       showCancelButton: true,
-      confirmButtonText: "Edit",
+      cancelButtonText: "CLOSE",
+      confirmButtonText: "OK",
       backdrop: true,
       didOpen: () => {
         document.getElementById("namef").value = osuser.name;
@@ -244,6 +284,47 @@ document.getElementById("profilepicture").onclick = function () {
         } else {
           console.log("User does'nt have a default photo genarated, WEEEIRD");
         }
+
+        document.getElementById("btnsave").onclick = function () {
+          const uname = document.getElementById("uname").value;
+          const name = document.getElementById("namef").value;
+          const good = isUserNameValid(uname);
+          if (good == true) {
+            updateUserDB(localuid, name, uname);
+            const photogen = new String(
+              "https://avatars.dicebear.com/api/adventurer-neutral/" +
+                uname +
+                ".svg"
+            );
+            //Update Profile in AUTH
+            updateProfile(curuser, {
+              displayName: uname,
+              photoURL: photogen,
+            })
+              .then(() => {})
+              .catch((error) => {});
+            //END
+            osuser.name = name;
+            osuser.username = uname;
+            saveUserToLS(osuser, localuid);
+            Swal.fire({
+              title: "User Details Saved",
+              text: "User info saved successfully !",
+              showCancelButton: false,
+              showConfirmButton: true,
+              showCloseButton: false,
+              icon: "success",
+            })
+              .then((result) => {
+                if (result.isConfirmed) {
+                  location.reload();
+                  return false;
+                }
+              })
+              .catch((err) => {});
+          } else {
+          }
+        };
       },
       allowOutsideClick: () => {
         const popup = Swal.getPopup();
@@ -257,22 +338,6 @@ document.getElementById("profilepicture").onclick = function () {
         return false;
       },
     })
-    .then((result) => {
-      if (result.isConfirmed) {
-        const uname = document.getElementById("uname").value;
-        const name = document.getElementById("namef").value;
-        updateUserDB(localuid, name, uname);
-        //Update Profile in AUTH
-        updateProfile(curuser, {
-          displayName: uname,
-        })
-          .then(() => {})
-          .catch((error) => {});
-        //END
-        osuser.name = name;
-        osuser.username = uname;
-        saveUserToLS(osuser, localuid);
-      }
-    })
+    .then((result) => {})
     .catch((err) => {});
 };

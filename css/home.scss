@@ -286,16 +286,20 @@ main {
 }
 
 .profileswalhtml > h2 > input {
-  text-align: center !important;
-  white-space: nowrap;
-}
-
-.profileswalhtml > h2 > input:disabled {
   background-color: transparent;
   border-color: transparent;
   color: $white;
+  text-align: center !important;
+  transition: all ease-out 0.4s;
+}
+
+.profileswalhtml > h2 > input:focus {
+  background-color: $white;
+  border-color: $red;
+  color: $primary;
   text-align: center;
   white-space: nowrap;
+  transition: all ease-in 0.3s;
 }
 
 .profilepicswal {
@@ -304,6 +308,27 @@ main {
   border-style: solid;
   margin-top: 0;
   margin-bottom: 1rem;
-  height: 120px;
-  width: 120px;
+  max-height: 120px;
+  max-width: 120px;
+  height: auto;
+  width: auto;
+}
+
+#btnsave {
+  background-color: #419d78 !important;
+  height: fit-content !important;
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
+  padding-right: 1em;
+  padding-left: 1em;
+  width: fit-content !important;
+}
+
+#btnsave:hover {
+  background-color: rgba($color: #419d78, $alpha: 0.8) !important;
+  transition: all ease-in 0.1s;
+}
+
+.swal2-actions {
+  margin: 0em auto 0em !important;
 }

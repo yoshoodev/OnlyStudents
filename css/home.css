@@ -11560,16 +11560,20 @@ main {
 }
 
 .profileswalhtml > h2 > input, .profileswalhtml > .h2 > input {
-  text-align: center !important;
-  white-space: nowrap;
-}
-
-.profileswalhtml > h2 > input:disabled, .profileswalhtml > .h2 > input:disabled {
   background-color: transparent;
   border-color: transparent;
   color: #f3f3f3;
+  text-align: center !important;
+  transition: all ease-out 0.4s;
+}
+
+.profileswalhtml > h2 > input:focus, .profileswalhtml > .h2 > input:focus {
+  background-color: #f3f3f3;
+  border-color: #d52941;
+  color: #26272c;
   text-align: center;
   white-space: nowrap;
+  transition: all ease-in 0.3s;
 }
 
 .profilepicswal {
@@ -11578,6 +11582,31 @@ main {
   border-style: solid;
   margin-top: 0;
   margin-bottom: 1rem;
-  height: 120px;
-  width: 120px;
+  max-height: 120px;
+  max-width: 120px;
+  height: auto;
+  width: auto;
+}
+
+#btnsave {
+  background-color: #419d78 !important;
+  height: -webkit-fit-content !important;
+  height: -moz-fit-content !important;
+  height: fit-content !important;
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
+  padding-right: 1em;
+  padding-left: 1em;
+  width: -webkit-fit-content !important;
+  width: -moz-fit-content !important;
+  width: fit-content !important;
+}
+
+#btnsave:hover {
+  background-color: rgba(65, 157, 120, 0.8) !important;
+  transition: all ease-in 0.1s;
+}
+
+.swal2-actions {
+  margin: 0em auto 0em !important;
 }/*# sourceMappingURL=home.css.map */
