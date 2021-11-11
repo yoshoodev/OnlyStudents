@@ -142,8 +142,11 @@ onAuthStateChanged(auth, (user) => {
     localuid = user.uid;
     curuser = user;
     profilepic = user.photoURL;
+    console.log("before load: " + user.photoURL);
+    const profpicurl = new String("url(" + user.photoURL + ")");
     document.getElementById("profilepicture").style.backgroundImage =
-      "url(" + user.photoURL + ")";
+      profpicurl;
+    console.log("after load: " + profpicurl);
 
     asyncCheckUEAS(osuser, user.uid)
       .then((result) => {
