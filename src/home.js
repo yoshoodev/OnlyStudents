@@ -110,14 +110,11 @@ function checkUEASWO() {
 
 async function asyncCheckUEAS(userobj = new OUser(), uid) {
   if (checkSavedUser(uid) == true) {
-    console.log("User data already in local storage importing into variable");
     const userobjwait = await importUFLS(uid);
     userobj = userobjwait;
     return userobj;
   } else {
-    console.log("Getting user data from DB");
     const userobjwait = await getUserFromDB(uid);
-    console.log("Got user from db: " + userobjwait);
     saveUserToLS(userobjwait, uid);
     userobj = userobjwait;
     return userobj;
@@ -136,18 +133,15 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/firebase.User
-    console.log("Signed in  " + user.uid);
     document.getElementById("username").innerHTML = "" + user.displayName;
     //getUserFromDB(user.uid);
 
     localuid = user.uid;
     curuser = user;
     profilepic = user.photoURL;
-    console.log("before load: " + user.photoURL);
     const profpicurl = new String("url(" + user.photoURL + ")");
     document.getElementById("profilepicture").style.backgroundImage =
       profpicurl;
-    console.log("after load: " + profpicurl);
 
     asyncCheckUEAS(osuser, user.uid)
       .then((result) => {
@@ -280,7 +274,6 @@ document.getElementById("profilepicture").onclick = function () {
         document.getElementById("uname").value = osuser.username;
         if (curuser.photoURL != null) {
           document.getElementById("profileimg").src = curuser.photoURL;
-          console.log("Photo Loaded :)");
         } else {
           console.log("User does'nt have a default photo genarated, WEEEIRD");
         }
