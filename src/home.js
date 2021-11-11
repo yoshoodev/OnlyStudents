@@ -1,7 +1,12 @@
 // Import the functions you need from the SDKs you need
 import Aos, { init } from "aos";
 import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
 import barba from "@barba/core";
 import { gsap } from "gsap";
 import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
@@ -31,6 +36,7 @@ const auth = getAuth();
 const db = getFirestore();
 
 var osuser = new OUser();
+var curuser = null;
 
 Aos.init();
 
@@ -123,6 +129,7 @@ function importUFLS(uid) {
 }
 
 var localuid = null;
+var profilepic = null;
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -133,6 +140,10 @@ onAuthStateChanged(auth, (user) => {
     //getUserFromDB(user.uid);
 
     localuid = user.uid;
+    curuser = user;
+    profilepic = user.photoURL;
+    document.getElementById("profilepicture").style.backgroundImage =
+      "url(" + user.photoURL + ")";
 
     asyncCheckUEAS(osuser, user.uid)
       .then((result) => {
@@ -204,7 +215,7 @@ async function updateUserDB(uid, name, username, email) {
   });
 }
 
-document.getElementById("profilepic").onclick = function () {
+document.getElementById("profilepicture").onclick = function () {
   const profileSwal = Swal.mixin({
     customClass: {
       htmlContainer: "profileswalhtml",
@@ -213,14 +224,23 @@ document.getElementById("profilepic").onclick = function () {
   profileSwal
     .fire({
       title: "Profile Info",
-      html: `<h2 style="margin-top: 0; margin-bottom: 1rem;">Name : <input class="form-control" type="text" placeholder="name" id="namef" value="name" ></input></h2>
-    <h2 style="margin-top: 0">Username: <input class="form-control" type="text" placeholder="username" id="uname" value="username" ></h2>
+      html: `
+      <img id="profileimg" src="https://avatars.dicebear.com/api/adventurer-neutral/default.svg" class="rounded-circle profilepicswal"></img>
+      <h2 style="margin-top: 0; margin-bottom: 1rem;">Name : <input class="form-control rounded-pill" type="text" placeholder="name" id="namef" value="name" disabled></input></h2>
+    <h2 style="margin-top: 0">Username: <input class="form-control rounded-pill" type="text" placeholder="username" id="uname" value="username" disabled></h2>
     `,
       showCancelButton: true,
-      confirmButtonText: "Save",
+      confirmButtonText: "Edit",
+      backdrop: true,
       didOpen: () => {
-        document.getElementById("uname").value = osuser.name;
-        document.getElementById("namef").value = osuser.username;
+        document.getElementById("namef").value = osuser.name;
+        document.getElementById("uname").value = osuser.username;
+        if (curuser.photoURL != null) {
+          document.getElementById("profileimg").src = curuser.photoURL;
+          console.log("Photo Loaded :)");
+        } else {
+          console.log("User does'nt have a default photo genarated, WEEEIRD");
+        }
       },
       allowOutsideClick: () => {
         const popup = Swal.getPopup();
@@ -239,6 +259,16 @@ document.getElementById("profilepic").onclick = function () {
         const uname = document.getElementById("uname").value;
         const name = document.getElementById("namef").value;
         updateUserDB(localuid, name, uname);
+        //Update Profile in AUTH
+        updateProfile(curuser, {
+          displayName: uname,
+        })
+          .then(() => {})
+          .catch((error) => {});
+        //END
+        osuser.name = name;
+        osuser.username = uname;
+        saveUserToLS(osuser, localuid);
       }
     })
     .catch((err) => {});

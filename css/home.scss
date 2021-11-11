@@ -261,10 +261,9 @@ main {
   margin-right: 1rem !important;
   border-style: solid;
   border-color: $bd-color;
-  background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Madison_Beer_2019_by_Glenn_Francis_%28cropped%29.jpg/1200px-Madison_Beer_2019_by_Glenn_Francis_%28cropped%29.jpg);
-  background-size: 60px, 60px;
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: top;
+  background-position: center;
   border-width: 3px;
   transition: all ease-out 0.2s;
 }
@@ -278,6 +277,8 @@ main {
 .profileswalhtml {
   display: flex !important;
   flex-direction: column !important;
+  justify-content: center;
+  align-items: center;
 }
 
 .profileswalhtml > h2 {
@@ -285,5 +286,24 @@ main {
 }
 
 .profileswalhtml > h2 > input {
-  font-family: Minion !important;
+  text-align: center !important;
+  white-space: nowrap;
+}
+
+.profileswalhtml > h2 > input:disabled {
+  background-color: transparent;
+  border-color: transparent;
+  color: $white;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.profilepicswal {
+  border-color: $blue;
+  border-width: 3px;
+  border-style: solid;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  height: 120px;
+  width: 120px;
 }

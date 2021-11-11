@@ -208,8 +208,15 @@ document.getElementById("registerbtn").onclick = function () {
         .then((userCredential) => {
           registerData(name, username, email, userCredential.user.uid);
           console.log("Updating Username with " + username);
+          const photogen = new String(
+            "https://avatars.dicebear.com/api/adventurer-neutral/" +
+              username +
+              ".svg"
+          );
+          console.log("Generated url for pic : " + photogen);
           updateProfile(userCredential.user, {
             displayName: username,
+            photoURL: photogen,
           })
             .then(() => {
               console.log("Updated: " + auth.currentUser.displayName);
