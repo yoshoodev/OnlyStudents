@@ -274,3 +274,16 @@ main {
   box-shadow: rgba(213, 41, 65, 0.4) 0px 0px 8px 5px;
   transition: all ease-in 0.2s;
 }
+
+.profileswalhtml {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.profileswalhtml > h2 {
+  font-family: SegoeScript;
+}
+
+.profileswalhtml > h2 > input {
+  font-family: Minion !important;
+}
