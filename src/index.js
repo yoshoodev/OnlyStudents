@@ -3,17 +3,13 @@ import { initializeApp } from "firebase/app";
 import {
   signInWithEmailAndPassword,
   getAuth,
-  setPersistence,
-  browserLocalPersistence,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+import { getFirestore, setDoc, doc } from "firebase/firestore";
 import Swup from "swup";
-// Import the functions you need from the SDKs you need
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyD33F_vo2zofnh_-g6dk4I3eSawDcBkTL8",
   authDomain: "onlystudents-c006b.firebaseapp.com",
@@ -24,9 +20,10 @@ const firebaseConfig = {
   measurementId: "G-PTCTDT0BBV",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
+const db = getFirestore();
+
 var userauth = auth.currentUser;
 
 const swup = new Swup();
@@ -105,6 +102,19 @@ function validateForm() {
     return false;
   } else {
     return true;
+  }
+}
+
+async function registerData(nameI, usernameI, emailI, uidI) {
+  try {
+    const docRef = await setDoc(doc(db, "users", uidI), {
+      name: nameI,
+      username: usernameI,
+      email: emailI,
+    });
+    console.log("Data added with ID: ", uidI);
+  } catch (e) {
+    console.error("Error adding data to users: ", e);
   }
 }
 
@@ -196,6 +206,7 @@ document.getElementById("registerbtn").onclick = function () {
       comingfromreg = 1;
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
+          registerData(name, username, email, userCredential.user.uid);
           console.log("Updating Username with " + username);
           updateProfile(userCredential.user, {
             displayName: username,
@@ -285,7 +296,6 @@ document.getElementById("loginbtn").onclick = function () {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         userauth = userCredential.user;
-        setPersistence(auth, browserLocalPersistence);
         console.log("Login successful");
         redirect();
       })

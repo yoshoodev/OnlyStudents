@@ -4,11 +4,8 @@ import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import barba from "@barba/core";
 import { gsap } from "gsap";
+import { getFirestore, addDoc, collection } from "firebase/firestore";
 
-// only this line when included with script tag
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyD33F_vo2zofnh_-g6dk4I3eSawDcBkTL8",
   authDomain: "onlystudents-c006b.firebaseapp.com",
@@ -19,11 +16,9 @@ const firebaseConfig = {
   measurementId: "G-PTCTDT0BBV",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
-// Initialize AOS
 Aos.init();
 
 barba.init({
