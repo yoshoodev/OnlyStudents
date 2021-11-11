@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import barba from "@barba/core";
 import { gsap } from "gsap";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
 import { OUser, userConverter } from "./userops";
 
 Storage.prototype.setObject = function (key, value) {
@@ -194,33 +194,52 @@ document.getElementById("logoutbtn").onclick = function () {
   });
 };
 
+async function updateUserDB(uid, name, username, email) {
+  const docRef = doc(db, "users", uid);
+
+  // Set the "capital" field of the city 'DC'
+  await updateDoc(docRef, {
+    name: name,
+    username: username,
+  });
+}
+
 document.getElementById("profilepic").onclick = function () {
   const profileSwal = Swal.mixin({
     customClass: {
       htmlContainer: "profileswalhtml",
     },
   });
-  profileSwal.fire({
-    title: "Profile Info",
-    html: `<h2 style="margin-top: 0; margin-bottom: 1rem;">Name : <input class="form-control" type="text" placeholder="username" id="uname" value="username" disabled></input></h2>
-    <h2 style="margin-top: 0">Username: <input class="form-control" type="text" placeholder="username" id="namef" value="username" disabled></h2>
+  profileSwal
+    .fire({
+      title: "Profile Info",
+      html: `<h2 style="margin-top: 0; margin-bottom: 1rem;">Name : <input class="form-control" type="text" placeholder="name" id="namef" value="name" ></input></h2>
+    <h2 style="margin-top: 0">Username: <input class="form-control" type="text" placeholder="username" id="uname" value="username" ></h2>
     `,
-    showCancelButton: true,
-    confirmButtonText: "Save",
-    didOpen: () => {
-      document.getElementById("uname").value = osuser.name;
-      document.getElementById("namef").value = osuser.username;
-    },
-    allowOutsideClick: () => {
-      const popup = Swal.getPopup();
-      popup.classList.remove("swal2-show");
-      setTimeout(() => {
-        popup.classList.add("animate__animated", "animate__headShake");
-      });
-      setTimeout(() => {
-        popup.classList.remove("animate__animated", "animate__headShake");
-      }, 500);
-      return false;
-    },
-  });
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      didOpen: () => {
+        document.getElementById("uname").value = osuser.name;
+        document.getElementById("namef").value = osuser.username;
+      },
+      allowOutsideClick: () => {
+        const popup = Swal.getPopup();
+        popup.classList.remove("swal2-show");
+        setTimeout(() => {
+          popup.classList.add("animate__animated", "animate__headShake");
+        });
+        setTimeout(() => {
+          popup.classList.remove("animate__animated", "animate__headShake");
+        }, 500);
+        return false;
+      },
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        const uname = document.getElementById("uname").value;
+        const name = document.getElementById("namef").value;
+        updateUserDB(localuid, name, uname);
+      }
+    })
+    .catch((err) => {});
 };
