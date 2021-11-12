@@ -37,6 +37,7 @@ $rgba-red: rgba(213, 41, 65, 1);
 $white: #f3f3f3;
 $blue: #5295cb;
 $bd-color: $blue;
+$yellow: #ffc857;
 
 // IMPORT BOOTSTRAP HERE
 
@@ -207,12 +208,7 @@ main {
   margin-right: 0rem;
   border-style: solid;
   border-color: $bd-color;
-}
-
-.logo:hover {
-  border-color: $red;
-  box-shadow: rgba(213, 41, 65, 0.4) 0px 0px 8px 5px;
-  transition: all ease-in 0.2s;
+  cursor: default;
 }
 
 .usrname {
@@ -226,6 +222,7 @@ main {
   margin-bottom: 1rem;
   border-style: solid;
   border-color: $bd-color;
+  user-select: none;
 }
 
 #logoutbtn {
@@ -433,7 +430,7 @@ main {
 }
 
 .card-deck > .card:hover {
-  border-color: $red;
+  border-color: $red !important;
   border-style: solid;
   border-width: 3px;
   transform: scale(1.07);
@@ -442,10 +439,50 @@ main {
 }
 
 .card-deck > .card:focus-visible {
-  border-color: $blue;
+  border-color: $blue !important;
   border-style: solid;
   border-width: 3px;
   transform: scale(1.07);
   transition: all ease-in 0.25s;
   box-shadow: rgba($blue, 0.3) 0px 0px 30px 4px;
+}
+
+.card {
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-body {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 0.2rem !important;
+  margin-top: 1rem !important;
+  padding: 0;
+  z-index: 1;
+}
+
+.card-body > svg {
+  color: $red;
+  fill: $yellow;
+  //stroke: $background;
+  stroke-width: 0.25px;
+  filter: drop-shadow(0px 3px 10px rgba(0, 0, 0, 0.7));
+}
+
+.card-body > h1 {
+  font-family: SegoeScript !important;
+  margin-top: 0.5rem;
+  text-shadow: 2px 2px 5px $background;
+}
+
+#special {
+  background-image: url("../assets/specialbg.png");
+  z-index: 0;
+  background-size: 120vh;
+  border-color: $background;
+  //background-blend-mode: color-dodge;
 }
