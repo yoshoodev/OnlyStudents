@@ -379,7 +379,8 @@ document.getElementById("profilepicture").onclick = function () {
                         });
                       })
                       .catch((error) => {
-                        if (error.code == "auth/wrong-password") {
+                        const errorCode = error.code;
+                        if (errorCode == "auth/wrong-password") {
                           Swal.fire({
                             title: "Wrong Password",
                             text: "You don't know your own password ?",
@@ -388,9 +389,16 @@ document.getElementById("profilepicture").onclick = function () {
                             showCancelButton: false,
                             showConfirmButton: true,
                             confirmButtonText: "SIGH",
-                          });
-                          document.getElementById("profilepicture").click();
-                          return false;
+                          })
+                            .then((result) => {
+                              if (result.isConfirmed) {
+                                document
+                                  .getElementById("profilepicture")
+                                  .click();
+                                return false;
+                              }
+                            })
+                            .catch((err) => {});
                         } else {
                           Swal.fire({
                             title: "Error !",
@@ -404,14 +412,34 @@ document.getElementById("profilepicture").onclick = function () {
                       });
                   })
                   .catch((error) => {
-                    Swal.fire({
-                      title: "Error !",
-                      text: "Give this to the devs : " + error.code,
-                      icon: "error",
-                      showCloseButton: false,
-                      showCancelButton: false,
-                      showConfirmButton: true,
-                    });
+                    const errorCode = error.code;
+                    if (errorCode == "auth/wrong-password") {
+                      Swal.fire({
+                        title: "Wrong Password",
+                        text: "You don't know your own password ?",
+                        icon: "error",
+                        showCloseButton: false,
+                        showCancelButton: false,
+                        showConfirmButton: true,
+                        confirmButtonText: "SIGH",
+                      })
+                        .then((result) => {
+                          if (result.isConfirmed) {
+                            document.getElementById("profilepicture").click();
+                            return false;
+                          }
+                        })
+                        .catch((err) => {});
+                    } else {
+                      Swal.fire({
+                        title: "Error !",
+                        text: "Give this to the devs : " + error.code,
+                        icon: "error",
+                        showCloseButton: false,
+                        showCancelButton: false,
+                        showConfirmButton: true,
+                      });
+                    }
                   });
               }
             })
@@ -466,7 +494,8 @@ document.getElementById("profilepicture").onclick = function () {
                     });
                   })
                   .catch((error) => {
-                    if (error.code == "auth/wrong-password") {
+                    const errorCode = error.code;
+                    if (errorCode == "auth/wrong-password") {
                       Swal.fire({
                         title: "Wrong Password",
                         text: "You don't know your own password ?",
@@ -475,9 +504,14 @@ document.getElementById("profilepicture").onclick = function () {
                         showCancelButton: false,
                         showConfirmButton: true,
                         confirmButtonText: "SIGH",
-                      });
-                      document.getElementById("profilepicture").click();
-                      return false;
+                      })
+                        .then((result) => {
+                          if (result.isConfirmed) {
+                            document.getElementById("profilepicture").click();
+                            return false;
+                          }
+                        })
+                        .catch((err) => {});
                     } else {
                       Swal.fire({
                         title: "Error !",
@@ -491,15 +525,34 @@ document.getElementById("profilepicture").onclick = function () {
                   });
               })
               .catch((error) => {
-                console.log(error.code);
-                Swal.fire({
-                  title: "Error !",
-                  text: "Give this to the devs : " + error.code,
-                  icon: "error",
-                  showCloseButton: false,
-                  showCancelButton: false,
-                  showConfirmButton: true,
-                });
+                const errorCode = error.code;
+                if (errorCode == "auth/wrong-password") {
+                  Swal.fire({
+                    title: "Wrong Password",
+                    text: "You don't know your own password ?",
+                    icon: "error",
+                    showCloseButton: false,
+                    showCancelButton: false,
+                    showConfirmButton: true,
+                    confirmButtonText: "SIGH",
+                  })
+                    .then((result) => {
+                      if (result.isConfirmed) {
+                        document.getElementById("profilepicture").click();
+                        return false;
+                      }
+                    })
+                    .catch((err) => {});
+                } else {
+                  Swal.fire({
+                    title: "Error !",
+                    text: "Give this to the devs : " + error.code,
+                    icon: "error",
+                    showCloseButton: false,
+                    showCancelButton: false,
+                    showConfirmButton: true,
+                  });
+                }
               });
           });
         };
