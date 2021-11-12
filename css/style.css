@@ -11328,9 +11328,6 @@ textarea.form-control-lg {
 
 body {
   background-color: #1c1d21;
-  overflow-y: scroll !important;
-  -ms-scroll-snap-type: y mandatory !important;
-      scroll-snap-type: y mandatory !important;
 }
 
 section {
@@ -11562,7 +11559,6 @@ html.is-animating .transition-fade {
 .register {
   min-height: 100vh;
   height: auto !important;
-  overflow: hidden !important;
 }
 
 @media only screen and (max-width: 500px) {
@@ -11619,7 +11615,6 @@ html.is-animating .transition-fade {
   border-radius: 100px;
   border-color: #26272c;
   box-shadow: rgba(213, 41, 65, 0.6) 0px 0px 50px 4px;
-  overflow: hidden !important;
 }
 
 ::-moz-placeholder {
