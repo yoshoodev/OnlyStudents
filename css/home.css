@@ -11680,7 +11680,7 @@ html.is-animating .transition-fade2 {
 }
 .card-deck > .card {
   min-width: 20vw;
-  min-height: 30vh;
+  min-height: 10vh;
   background-color: #26272c;
   border-radius: 3rem;
   color: #f3f3f3;
