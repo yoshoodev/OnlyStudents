@@ -294,7 +294,25 @@ document.getElementById("profilepicture").onclick = function () {
           const name = document.getElementById("namef").value;
           const email = document.getElementById("email").value;
           const good = isUserNameValid(uname);
-          if (good == true) {
+
+          function check() {
+            if (
+              osuser.name == name &&
+              osuser.username == uname &&
+              osuser.email == email
+            ) {
+              console.log("SAME CREDS");
+              Swal.showValidationMessage(`Info can't be the same !`);
+              return false;
+            } else {
+              console.log("GTG");
+              return true;
+            }
+          }
+
+          const checkVar = check();
+
+          if (good == true && checkVar == true) {
             updateUserDB(localuid, name, uname);
             const photogen = new String(
               "https://avatars.dicebear.com/api/adventurer-neutral/" +
