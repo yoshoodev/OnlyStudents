@@ -353,7 +353,9 @@ document.getElementById("profilepicture").onclick = function () {
             preConfirm: () => {
               const password = Swal.getPopup().querySelector("#passwd3").value;
               if (!password) {
-                Swal.showValidationMessage(`Please enter login and password`);
+                Swal.showValidationMessage(
+                  `Please enter your current password`
+                );
               }
               return { password: password };
             },
@@ -451,7 +453,7 @@ document.getElementById("profilepicture").onclick = function () {
             title: "Password Change",
             html: `<input type="password" id="passwordcurr" class="swal2-input" placeholder="Current Password">
             <input type="password" id="passwd1" class="swal2-input" placeholder="New Password">
-            <input type="password" id="passwd2" class="swal2-input" placeholder="Again pls">`,
+            <input type="password" id="passwd2" class="swal2-input" placeholder="New Password Again">`,
             confirmButtonText: "Change Password",
             focusConfirm: false,
             preConfirm: () => {
@@ -460,7 +462,7 @@ document.getElementById("profilepicture").onclick = function () {
                 Swal.getPopup().querySelector("#passwordcurr").value;
               const password2 = Swal.getPopup().querySelector("#passwd2").value;
               if (!password1 || !password2) {
-                Swal.showValidationMessage(`Please enter both passwords`);
+                Swal.showValidationMessage(`Please enter all passwords`);
               } else {
                 if (password1 != password2) {
                   Swal.showValidationMessage(`Both passwords must be the same`);
@@ -473,87 +475,89 @@ document.getElementById("profilepicture").onclick = function () {
               }
             },
           }).then((result) => {
-            const user = curuser;
-            const credential = EmailAuthProvider.credential(
-              user.email,
-              result.value.currpass
-            );
-            reauthenticateWithCredential(user, credential)
-              .then(() => {
-                // User re-authenticated.
-                console.log("AUTHOK");
-                updatePassword(user, result.value.pass2)
-                  .then(() => {
-                    Swal.fire({
-                      title: "Success !",
-                      text: "Password change successfuly :D",
-                      icon: "success",
-                      showCloseButton: false,
-                      showCancelButton: false,
-                      showConfirmButton: true,
-                    });
-                  })
-                  .catch((error) => {
-                    const errorCode = error.code;
-                    if (errorCode == "auth/wrong-password") {
+            if (result.isConfirmed) {
+              const user = curuser;
+              const credential = EmailAuthProvider.credential(
+                user.email,
+                result.value.currpass
+              );
+              reauthenticateWithCredential(user, credential)
+                .then(() => {
+                  // User re-authenticated.
+                  console.log("AUTHOK");
+                  updatePassword(user, result.value.pass2)
+                    .then(() => {
                       Swal.fire({
-                        title: "Wrong Password",
-                        text: "You don't know your own password ?",
-                        icon: "error",
-                        showCloseButton: false,
-                        showCancelButton: false,
-                        showConfirmButton: true,
-                        confirmButtonText: "SIGH",
-                      })
-                        .then((result) => {
-                          if (result.isConfirmed) {
-                            document.getElementById("profilepicture").click();
-                            return false;
-                          }
-                        })
-                        .catch((err) => {});
-                    } else {
-                      Swal.fire({
-                        title: "Error !",
-                        text: "Give this to the devs : " + error.code,
-                        icon: "error",
+                        title: "Success !",
+                        text: "Password change successfuly :D",
+                        icon: "success",
                         showCloseButton: false,
                         showCancelButton: false,
                         showConfirmButton: true,
                       });
-                    }
-                  });
-              })
-              .catch((error) => {
-                const errorCode = error.code;
-                if (errorCode == "auth/wrong-password") {
-                  Swal.fire({
-                    title: "Wrong Password",
-                    text: "You don't know your own password ?",
-                    icon: "error",
-                    showCloseButton: false,
-                    showCancelButton: false,
-                    showConfirmButton: true,
-                    confirmButtonText: "SIGH",
-                  })
-                    .then((result) => {
-                      if (result.isConfirmed) {
-                        document.getElementById("profilepicture").click();
-                        return false;
-                      }
                     })
-                    .catch((err) => {});
-                } else {
-                  Swal.fire({
-                    title: "Error !",
-                    text: "Give this to the devs : " + error.code,
-                    icon: "error",
-                    showCloseButton: false,
-                    showCancelButton: false,
-                    showConfirmButton: true,
-                  });
-                }
-              });
+                    .catch((error) => {
+                      const errorCode = error.code;
+                      if (errorCode == "auth/wrong-password") {
+                        Swal.fire({
+                          title: "Wrong Password",
+                          text: "You don't know your own password ?",
+                          icon: "error",
+                          showCloseButton: false,
+                          showCancelButton: false,
+                          showConfirmButton: true,
+                          confirmButtonText: "SIGH",
+                        })
+                          .then((result) => {
+                            if (result.isConfirmed) {
+                              document.getElementById("profilepicture").click();
+                              return false;
+                            }
+                          })
+                          .catch((err) => {});
+                      } else {
+                        Swal.fire({
+                          title: "Error !",
+                          text: "Give this to the devs : " + error.code,
+                          icon: "error",
+                          showCloseButton: false,
+                          showCancelButton: false,
+                          showConfirmButton: true,
+                        });
+                      }
+                    });
+                })
+                .catch((error) => {
+                  const errorCode = error.code;
+                  if (errorCode == "auth/wrong-password") {
+                    Swal.fire({
+                      title: "Wrong Password",
+                      text: "You don't know your own password ?",
+                      icon: "error",
+                      showCloseButton: false,
+                      showCancelButton: false,
+                      showConfirmButton: true,
+                      confirmButtonText: "SIGH",
+                    })
+                      .then((result) => {
+                        if (result.isConfirmed) {
+                          document.getElementById("profilepicture").click();
+                          return false;
+                        }
+                      })
+                      .catch((err) => {});
+                  } else {
+                    Swal.fire({
+                      title: "Error !",
+                      text: "Give this to the devs : " + error.code,
+                      icon: "error",
+                      showCloseButton: false,
+                      showCancelButton: false,
+                      showConfirmButton: true,
+                    });
+                  }
+                });
+            }
           });
         };
       },

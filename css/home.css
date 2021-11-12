@@ -11634,17 +11634,29 @@ main {
   margin-right: auto;
   margin: 0;
   margin-top: 1em;
+  text-align: center;
+  overflow: hidden !important;
 }
 
 .swal2-html-container {
   display: flex !important;
   flex-direction: column !important;
+  overflow-x: hidden !important;
 }
 
 .swal2-validation-message {
-  background-color: #26272c;
-  color: #f3f3f3;
-  font-family: Minion;
-  font-size: 1.5em;
+  background-color: #26272c !important;
+  color: #f3f3f3 !important;
+  font-family: Minion !important;
+  font-size: 1.5em !important;
   transition: all ease-in 0.4s;
+}
+
+@media only screen and (max-width: 320px) {
+  .swal2-title {
+    font-size: 1.5rem;
+    white-space: wrap;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
 }/*# sourceMappingURL=home.css.map */
