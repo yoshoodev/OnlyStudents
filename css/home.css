@@ -11802,4 +11802,27 @@ html.is-animating .transition-fade2 {
   z-index: 0;
   background-size: 110vw;
   border-color: #1c1d21;
+}
+
+@media (max-width: 576px) {
+  #gaming {
+    background-image: url("../assets/gamingbg.png");
+    z-index: 0;
+    background-size: 170vh;
+    border-color: #1c1d21;
+  }
+
+  #edu {
+    background-image: url("../assets/edubg.png");
+    z-index: 0;
+    background-size: 170vh;
+    border-color: #1c1d21;
+  }
+
+  #special {
+    background-image: url("../assets/specialbg.png");
+    z-index: 0;
+    background-size: 170vh;
+    border-color: #1c1d21;
+  }
 }/*# sourceMappingURL=home.css.map */

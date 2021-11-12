@@ -541,3 +541,27 @@ main {
   border-color: $background;
   //background-blend-mode: color-dodge;
 }
+
+@media (max-width: 576px) {
+  #gaming {
+    background-image: url("../assets/gamingbg.png");
+    z-index: 0;
+    background-size: 170vh;
+    border-color: $background;
+    //background-blend-mode: color-dodge;
+  }
+  #edu {
+    background-image: url("../assets/edubg.png");
+    z-index: 0;
+    background-size: 170vh;
+    border-color: $background;
+    //background-blend-mode: color-dodge;
+  }
+  #special {
+    background-image: url("../assets/specialbg.png");
+    z-index: 0;
+    background-size: 170vh;
+    border-color: $background;
+    //background-blend-mode: color-dodge;
+  }
+}
