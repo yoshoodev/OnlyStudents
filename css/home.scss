@@ -182,6 +182,7 @@ main {
   margin-bottom: 1rem;
   margin-left: 0rem;
   padding-left: 0;
+  padding-right: 0;
 }
 
 #onlystudentslogo {
@@ -193,13 +194,17 @@ main {
   text-decoration: none;
   color: $white;
   min-height: 45px;
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.25rem !important;
 }
 
 .logo {
   min-height: 50px;
   font-size: 20pt;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-bottom: 1rem !important;
+  margin-top: 1rem !important;
+  //margin-left: 0rem;
+  margin-right: 0rem;
   border-style: solid;
   border-color: $bd-color;
 }
@@ -229,7 +234,7 @@ main {
   background-color: $background;
   font-family: SegoeScript;
   margin-left: 0rem;
-  margin-right: 1rem;
+  //margin-right: 1rem;
   display: block;
   border-style: solid;
   border-width: 3px;
@@ -382,4 +387,8 @@ main {
     margin-bottom: 0;
     padding-bottom: 0;
   }
+}
+
+.confirmDel {
+  background-color: $red !important;
 }

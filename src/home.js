@@ -343,23 +343,30 @@ document.getElementById("profilepicture").onclick = function () {
         };
 
         document.getElementById("btndelete").onclick = function () {
-          Swal.fire({
-            title: "Delete Account",
-            text: "",
-            html: `Are you sure you want to delete your account ?\nInput your current password down below !
-            <input type="password" id="passwd3" class="swal2-input" placeholder="Password">`,
-            confirmButtonText: "Sign in",
-            focusConfirm: false,
-            preConfirm: () => {
-              const password = Swal.getPopup().querySelector("#passwd3").value;
-              if (!password) {
-                Swal.showValidationMessage(
-                  `Please enter your current password`
-                );
-              }
-              return { password: password };
+          const profileSwal = Swal.mixin({
+            customClass: {
+              confirmButton: "confirmDel",
             },
-          })
+          });
+          profileSwal
+            .fire({
+              title: "Delete Account",
+              text: "",
+              html: `Are you sure you want to delete your account ?\nInput your current password down below !
+            <input type="password" id="passwd3" class="swal2-input" placeholder="Password">`,
+              confirmButtonText: "DELETE",
+              focusConfirm: false,
+              preConfirm: () => {
+                const password =
+                  Swal.getPopup().querySelector("#passwd3").value;
+                if (!password) {
+                  Swal.showValidationMessage(
+                    `Please enter your current password`
+                  );
+                }
+                return { password: password };
+              },
+            })
             .then((result) => {
               if (result.isConfirmed) {
                 const user = curuser;
