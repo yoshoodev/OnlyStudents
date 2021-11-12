@@ -60,7 +60,7 @@
               Login to
               <p><span>Only</span>Students</p>
             </h2>
-            <form>
+            <form? class="d-flex flex-column">
               <div class="mb-3 text-center user-select-none mb-sm-0 mt-sm-0">
                 <label for="exampleInputEmail1" class="form-label text-white"
                   >Email address</label
@@ -86,24 +86,24 @@
                 >
                 <input
                   type="password"
-                  class="form-control rounded-pill w-50 mx-auto"
-                  style="margin-bottom: 20rem"
+                  class="form-control rounded-pill w-50 mx-auto mb-3"
                   id="passwordform"
                 />
               </div>
-            </form>
+              <div class="mb-3 text-center">
+              <button class="btn btn-primary rounded-pill loginbtn" id="frgtpsswd">Forgot Password</button>
+            </div>
             <button
               class="
                 btn btn-primary
-                d-block
-                position-absolute
-                rounded-pill
                 loginbtn
-              "
+                rounded-pill"
               id="loginbtn"
             >
               Login
             </button>
+          </form>
+            
           </div>
         </div>
 
@@ -118,9 +118,10 @@
             flex-column
             align-items-center
             mx-4
+            pt-5
             user-select-none
           "
-          style="height: 50vh"
+          style="max-height: 80vh !important;"
         >
           <h1
             style="

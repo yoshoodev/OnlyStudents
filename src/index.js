@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   updateProfile,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { getFirestore, setDoc, doc } from "firebase/firestore";
 import Swup from "swup";
@@ -389,6 +390,62 @@ document.getElementById("loginbtn").onclick = function () {
       });
   } else {
     return false;
+  }
+};
+
+document.getElementById("frgtpsswd").onclick = function () {
+  var email = document.getElementById("emailform").value;
+  if (email == null || email == "") {
+    Swal.fire({
+      title: "Email missing",
+      text: "We need your email to send you the reset link :D",
+      icon: "error",
+      showCancelButton: false,
+      confirmButtonText: "Sure",
+    });
+  } else {
+    sendPasswordResetEmail(auth, email)
+      .then((result) => {
+        Swal.fire({
+          title: "Success",
+          text: "We sent you an email to recover your password !",
+          icon: "success",
+          showCancelButton: false,
+          confirmButtonText: "Yay",
+        });
+      })
+      .catch((error) => {
+        switch (error.code) {
+          case "auth/user-not-found":
+            Swal.fire({
+              title: "User Not Found",
+              text: "There is no user with this email address !",
+              icon: "error",
+              showCancelButton: false,
+              confirmButtonText: "Hmm",
+            });
+            break;
+          case "auth/invalid-email":
+            Swal.fire({
+              title: "Invalid Email",
+              text: "The email address is not valid !",
+              icon: "error",
+              showCancelButton: false,
+              confirmButtonText: "IDK",
+            });
+            break;
+
+          default:
+            Swal.fire({
+              title: "Error",
+              text: "Code : " + error.code,
+              icon: "error",
+              showCancelButton: false,
+              confirmButtonText: "Oops",
+            });
+            break;
+        }
+      });
   }
 };
 
