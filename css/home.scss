@@ -321,7 +321,6 @@ main {
   padding-bottom: 0.4em;
   padding-right: 1em;
   padding-left: 1em;
-  width: fit-content !important;
 }
 
 #btnsave:hover {
@@ -331,4 +330,43 @@ main {
 
 .swal2-actions {
   margin: 0em auto 0em !important;
+}
+
+.buttonsonf {
+  flex-wrap: wrap !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonsonf > .swal2-styled {
+  height: fit-content !important;
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+#btnpassw {
+  background-color: #ff6047 !important;
+}
+
+.swal2-input {
+  justify-self: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin: 0;
+  margin-top: 1em;
+}
+
+.swal2-html-container {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.swal2-validation-message {
+  background-color: $primary;
+  color: $white;
+  font-family: Minion;
+  font-size: 1.5em;
+  transition: all ease-in 0.4s;
 }

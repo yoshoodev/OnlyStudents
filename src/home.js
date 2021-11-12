@@ -6,6 +6,11 @@ import {
   onAuthStateChanged,
   signOut,
   updateProfile,
+  updateEmail,
+  updatePassword,
+  deleteUser,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
 } from "firebase/auth";
 import barba from "@barba/core";
 import { gsap } from "gsap";
@@ -263,7 +268,12 @@ document.getElementById("profilepicture").onclick = function () {
       <img id="profileimg" src="https://avatars.dicebear.com/api/adventurer-neutral/default.svg" class="rounded-circle profilepicswal"></img>
       <h2 style="margin-top: 0; margin-bottom: 1rem;">Name : <input class="form-control rounded-pill" type="text" placeholder="name" id="namef" value="name"></input></h2>
       <h2 style="margin-top: 0">Username: <input class="form-control rounded-pill" type="text" placeholder="username" id="uname" value="username"></h2>
+      <h2 style="margin-top: 0">Email: <input class="form-control rounded-pill" type="email" placeholder="email@example.com" id="email" value="email@example.com"></h2>
+      <div class="buttonsonf d-flex">
       <button id="btnsave" class="swal2-confirm swal2-styled">SAVE</button>
+      <button id="btndelete" class="swal2-cancel swal2-styled">DELETE USER</button>
+      <button id="btnpassw" class="swal2-confirm swal2-styled">PASSWORD</button>
+      </div>
     `,
       showCancelButton: true,
       cancelButtonText: "CLOSE",
@@ -272,6 +282,7 @@ document.getElementById("profilepicture").onclick = function () {
       didOpen: () => {
         document.getElementById("namef").value = osuser.name;
         document.getElementById("uname").value = osuser.username;
+        document.getElementById("email").value = curuser.email;
         if (curuser.photoURL != null) {
           document.getElementById("profileimg").src = curuser.photoURL;
         } else {
@@ -281,6 +292,7 @@ document.getElementById("profilepicture").onclick = function () {
         document.getElementById("btnsave").onclick = function () {
           const uname = document.getElementById("uname").value;
           const name = document.getElementById("namef").value;
+          const email = document.getElementById("email").value;
           const good = isUserNameValid(uname);
           if (good == true) {
             updateUserDB(localuid, name, uname);
@@ -297,6 +309,17 @@ document.getElementById("profilepicture").onclick = function () {
               .then(() => {})
               .catch((error) => {});
             //END
+            //UPDATE EMAIL
+            updateEmail(auth.currentUser, email)
+              .then(() => {
+                // Email updated!
+                // ...
+              })
+              .catch((error) => {
+                // An error occurred
+                // ...
+              });
+            //
             osuser.name = name;
             osuser.username = uname;
             saveUserToLS(osuser, localuid);
@@ -317,6 +340,168 @@ document.getElementById("profilepicture").onclick = function () {
               .catch((err) => {});
           } else {
           }
+        };
+
+        document.getElementById("btndelete").onclick = function () {
+          Swal.fire({
+            title: "Delete Account",
+            text: "",
+            html: `Are you sure you want to delete your account ?\nInput your current password down below !
+            <input type="password" id="passwd3" class="swal2-input" placeholder="Password">`,
+            confirmButtonText: "Sign in",
+            focusConfirm: false,
+            preConfirm: () => {
+              const password = Swal.getPopup().querySelector("#passwd3").value;
+              if (!password) {
+                Swal.showValidationMessage(`Please enter login and password`);
+              }
+              return { password: password };
+            },
+          })
+            .then((result) => {
+              if (result.isConfirmed) {
+                const user = curuser;
+                const credential = EmailAuthProvider.credential(
+                  user.email,
+                  result.value.password
+                );
+                reauthenticateWithCredential(user, credential)
+                  .then(() => {
+                    deleteUser(user)
+                      .then(() => {
+                        Swal.fire({
+                          title: "Success",
+                          text: "User has been deleted !",
+                          icon: "success",
+                          showCloseButton: false,
+                          showCancelButton: false,
+                          showConfirmButton: true,
+                        });
+                      })
+                      .catch((error) => {
+                        if (error.code == "auth/wrong-password") {
+                          Swal.fire({
+                            title: "Wrong Password",
+                            text: "You don't know your own password ?",
+                            icon: "error",
+                            showCloseButton: false,
+                            showCancelButton: false,
+                            showConfirmButton: true,
+                            confirmButtonText: "SIGH",
+                          });
+                          document.getElementById("profilepicture").click();
+                          return false;
+                        } else {
+                          Swal.fire({
+                            title: "Error !",
+                            text: "Give this to the devs : " + error.code,
+                            icon: "error",
+                            showCloseButton: false,
+                            showCancelButton: false,
+                            showConfirmButton: true,
+                          });
+                        }
+                      });
+                  })
+                  .catch((error) => {
+                    Swal.fire({
+                      title: "Error !",
+                      text: "Give this to the devs : " + error.code,
+                      icon: "error",
+                      showCloseButton: false,
+                      showCancelButton: false,
+                      showConfirmButton: true,
+                    });
+                  });
+              }
+            })
+            .catch((err) => {});
+        };
+
+        document.getElementById("btnpassw").onclick = function () {
+          Swal.fire({
+            title: "Password Change",
+            html: `<input type="password" id="passwordcurr" class="swal2-input" placeholder="Current Password">
+            <input type="password" id="passwd1" class="swal2-input" placeholder="New Password">
+            <input type="password" id="passwd2" class="swal2-input" placeholder="Again pls">`,
+            confirmButtonText: "Change Password",
+            focusConfirm: false,
+            preConfirm: () => {
+              const password1 = Swal.getPopup().querySelector("#passwd1").value;
+              const currpass =
+                Swal.getPopup().querySelector("#passwordcurr").value;
+              const password2 = Swal.getPopup().querySelector("#passwd2").value;
+              if (!password1 || !password2) {
+                Swal.showValidationMessage(`Please enter both passwords`);
+              } else {
+                if (password1 != password2) {
+                  Swal.showValidationMessage(`Both passwords must be the same`);
+                }
+                return {
+                  pass1: password1,
+                  pass2: password2,
+                  currpass: currpass,
+                };
+              }
+            },
+          }).then((result) => {
+            const user = curuser;
+            const credential = EmailAuthProvider.credential(
+              user.email,
+              result.value.currpass
+            );
+            reauthenticateWithCredential(user, credential)
+              .then(() => {
+                // User re-authenticated.
+                console.log("AUTHOK");
+                updatePassword(user, result.value.pass2)
+                  .then(() => {
+                    Swal.fire({
+                      title: "Success !",
+                      text: "Password change successfuly :D",
+                      icon: "success",
+                      showCloseButton: false,
+                      showCancelButton: false,
+                      showConfirmButton: true,
+                    });
+                  })
+                  .catch((error) => {
+                    if (error.code == "auth/wrong-password") {
+                      Swal.fire({
+                        title: "Wrong Password",
+                        text: "You don't know your own password ?",
+                        icon: "error",
+                        showCloseButton: false,
+                        showCancelButton: false,
+                        showConfirmButton: true,
+                        confirmButtonText: "SIGH",
+                      });
+                      document.getElementById("profilepicture").click();
+                      return false;
+                    } else {
+                      Swal.fire({
+                        title: "Error !",
+                        text: "Give this to the devs : " + error.code,
+                        icon: "error",
+                        showCloseButton: false,
+                        showCancelButton: false,
+                        showConfirmButton: true,
+                      });
+                    }
+                  });
+              })
+              .catch((error) => {
+                console.log(error.code);
+                Swal.fire({
+                  title: "Error !",
+                  text: "Give this to the devs : " + error.code,
+                  icon: "error",
+                  showCloseButton: false,
+                  showCancelButton: false,
+                  showConfirmButton: true,
+                });
+              });
+          });
         };
       },
       allowOutsideClick: () => {
