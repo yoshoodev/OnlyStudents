@@ -19,6 +19,8 @@ import { OUser, userConverter } from "./userops";
 import Swal from "sweetalert2";
 import barbaPrefetch from "@barba/prefetch";
 
+console.log("Initializing Auth and Navbar script !");
+
 Storage.prototype.setObject = function (key, value) {
   this.setItem(key, JSON.stringify(value));
 };
@@ -44,8 +46,47 @@ const db = getFirestore();
 
 var osuser = new OUser();
 var curuser = null;
+var localuid = null;
+var profilepic = null;
+
+// Initialize Authentication observer and log-out users if != present
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    document.getElementById("username").innerHTML = "" + user.displayName;
+    //getUserFromDB(user.uid);
+
+    localuid = user.uid;
+    curuser = user;
+    profilepic = user.photoURL;
+    const profpicurl = new String("url(" + user.photoURL + ")");
+    document.getElementById("profilepicture").style.backgroundImage =
+      profpicurl;
+
+    asyncCheckUEAS(osuser, user.uid)
+      .then((result) => {
+        osuser = result;
+      })
+      .catch((err) => {});
+
+    // ...
+  } else {
+    // User is signed out
+    console.log("User is not Signed IN");
+    //window.location.href = "/index.html";
+    deleteSavedUser(localuid);
+    window.location.replace("/index.html");
+    // ...
+  }
+});
+
+// Animate on scroll
 
 Aos.init();
+
+//Barba Animations
+
 barba.use(barbaPrefetch);
 
 barba.init({
@@ -66,6 +107,22 @@ barba.init({
     },
   ],
 });
+
+barba.hooks.after(() => {
+  //Replace script at the bottom of page on load
+  const bottomDOM = document.getElementsByTagName("body")[0];
+  const newScript = document.createElement("script");
+  const oldScript = document.querySelector(".main-script");
+  newScript.src = "../dist/home.bundle.js";
+  newScript.className = "main-script";
+  oldScript.remove();
+  bottomDOM.appendChild(newScript);
+  console.log("Re-initialized script");
+});
+
+//
+
+//User LocalStorage and DataBase functions
 
 async function getUserFromDB(uid) {
   const ref = doc(db, "users", uid).withConverter(userConverter);
@@ -105,17 +162,6 @@ function deleteSavedUser(uid) {
   }
 }
 
-function checkUEASWO() {
-  if (checkSavedUser() == true) {
-    console.log("Importing UDFLS");
-    var userobj = new OUser();
-    userobj = importUFLS();
-    return userobj;
-  } else {
-    console.log("Not loaded yet ...");
-  }
-}
-
 async function asyncCheckUEAS(userobj = new OUser(), uid) {
   if (checkSavedUser(uid) == true) {
     const userobjwait = await importUFLS(uid);
@@ -133,40 +179,6 @@ function importUFLS(uid) {
   const user = localStorage.getObject(uid);
   return user;
 }
-
-var localuid = null;
-var profilepic = null;
-
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/firebase.User
-    document.getElementById("username").innerHTML = "" + user.displayName;
-    //getUserFromDB(user.uid);
-
-    localuid = user.uid;
-    curuser = user;
-    profilepic = user.photoURL;
-    const profpicurl = new String("url(" + user.photoURL + ")");
-    document.getElementById("profilepicture").style.backgroundImage =
-      profpicurl;
-
-    asyncCheckUEAS(osuser, user.uid)
-      .then((result) => {
-        osuser = result;
-      })
-      .catch((err) => {});
-
-    // ...
-  } else {
-    // User is signed out
-    console.log("User is not Signed IN");
-    //window.location.href = "/index.html";
-    deleteSavedUser(localuid);
-    window.location.replace("/index.html");
-    // ...
-  }
-});
 
 function isUserNameValid(username) {
   /* 
@@ -204,6 +216,18 @@ function isUserNameValid(username) {
     return false;
   }
 }
+
+async function updateUserDB(uid, name, username, email) {
+  const docRef = doc(db, "users", uid);
+
+  // Set the "capital" field of the city 'DC'
+  await updateDoc(docRef, {
+    name: name,
+    username: username,
+  });
+}
+
+// Navigation Bar Buttons
 
 document.getElementById("logoutbtn").onclick = function () {
   Swal.fire({
@@ -247,16 +271,6 @@ document.getElementById("logoutbtn").onclick = function () {
     }
   });
 };
-
-async function updateUserDB(uid, name, username, email) {
-  const docRef = doc(db, "users", uid);
-
-  // Set the "capital" field of the city 'DC'
-  await updateDoc(docRef, {
-    name: name,
-    username: username,
-  });
-}
 
 document.getElementById("profilepicture").onclick = function () {
   const profileSwal = Swal.mixin({

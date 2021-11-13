@@ -54,7 +54,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 :root {
-  --bs-blue: #5295cb;
+  --bs-blue: #3b7db3;
   --bs-indigo: #6610f2;
   --bs-purple: #6f42c1;
   --bs-pink: #d63384;
@@ -11359,7 +11359,7 @@ textarea.form-control-lg {
 
 .swal2-confirm {
   border-radius: 5rem !important;
-  background-color: #5295cb !important;
+  background-color: #3b7db3 !important;
 }
 
 .swal2-cancel {
@@ -11495,7 +11495,7 @@ main {
   margin-top: 1rem !important;
   margin-right: 0rem;
   border-style: solid;
-  border-color: #5295cb;
+  border-color: #3b7db3;
   cursor: default;
 }
 
@@ -11511,7 +11511,7 @@ main {
   font-family: SegoeScript;
   margin-bottom: 1rem;
   border-style: solid;
-  border-color: #5295cb;
+  border-color: #3b7db3;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -11529,7 +11529,7 @@ main {
   display: block;
   border-style: solid;
   border-width: 3px;
-  border-color: #5295cb;
+  border-color: #3b7db3;
   transition: all ease-out 0.4s;
 }
 
@@ -11556,7 +11556,7 @@ main {
   margin-bottom: 1rem;
   margin-right: 1rem !important;
   border-style: solid;
-  border-color: #5295cb;
+  border-color: #3b7db3;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -11599,7 +11599,7 @@ main {
 }
 
 .profilepicswal {
-  border-color: #5295cb;
+  border-color: #3b7db3;
   border-width: 3px;
   border-style: solid;
   margin-top: 0;
@@ -11749,12 +11749,12 @@ main {
 }
 
 .card-deck > .card:focus-visible {
-  border-color: #5295cb !important;
+  border-color: #3b7db3 !important;
   border-style: solid;
   border-width: 3px;
   transform: scale(1.07);
   transition: all ease-in 0.2s;
-  box-shadow: rgba(82, 149, 203, 0.3) 0px 0px 30px 4px;
+  box-shadow: rgba(59, 125, 179, 0.3) 0px 0px 30px 4px;
 }
 
 .card {
@@ -11818,7 +11818,7 @@ main {
 
 #edu > .card-body > svg {
   color: #d52941;
-  fill: #5295cb;
+  fill: #3b7db3;
   stroke-width: 0.25px;
   filter: drop-shadow(0px 3px 4px black);
 }
@@ -11897,6 +11897,11 @@ main {
     min-height: 0 !important;
     overflow: scroll !important;
   }
+
+  body {
+    overflow-y: scroll !important;
+    overflow-x: hidden;
+  }
 }
 .sidebarbtn {
   width: 13.8rem;
@@ -11906,7 +11911,17 @@ main {
   background-color: #26272c;
   border-style: solid;
   border-width: 3px;
-  border-color: #5295cb;
+  border-color: #3b7db3;
+  color: #f3f3f3;
+  text-decoration: none;
+  text-align: center;
+}
+
+.sidebar a {
+  padding-top: 0.15rem;
+}
+
+.sidebar a:hover {
   color: #f3f3f3;
 }
 
@@ -12088,4 +12103,77 @@ body {
 .vddwn svg {
   transform: scale(1.1);
   fill: #f3f3f3;
+}
+
+[data-barba-namespace=specialintro] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 84vh;
+}
+
+body {
+  overflow: hidden;
+}
+
+.cardwrapspecial {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.specialintrocard {
+  min-width: 45vw;
+  max-width: 45vw;
+  height: 65vh;
+  flex-grow: 0;
+  background-color: #26272c;
+  border-radius: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.specialintrocard:hover {
+  border-color: #d52941 !important;
+  border-style: solid;
+  border-width: 3px;
+  transform: scale(1.07);
+  transition: all ease-in 0.2s;
+  box-shadow: rgba(213, 41, 65, 0.2) 0px 0px 30px 4px;
+}
+
+.specialintrocard:focus-visible {
+  border-color: #3b7db3 !important;
+  border-style: solid;
+  border-width: 3px;
+  transform: scale(1.07);
+  transition: all ease-in 0.2s;
+  box-shadow: rgba(59, 125, 179, 0.3) 0px 0px 30px 4px;
+}
+
+.specialintrocard .card-body {
+  justify-content: center !important;
+}
+
+.specialintrocard svg {
+  fill: #d52941;
+}
+
+#photobtnsp h1, #photobtnsp .h1 {
+  color: #d52941;
+  font-size: 3rem;
+}
+
+#videobtnsp h1, #videobtnsp .h1 {
+  color: #3b7db3;
+  margin-top: 1.8rem;
+  font-size: 3rem;
+}
+
+#videobtnsp svg {
+  fill: #3b7db3;
 }/*# sourceMappingURL=home.css.map */
