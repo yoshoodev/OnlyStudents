@@ -11976,6 +11976,9 @@ footer {
           user-select: none;
   margin-bottom: 1px;
   overflow-wrap: break-word !important;
+  flex-grow: 1;
+  align-self: flex-end !important;
+  justify-self: flex-end;
 }
 
 footer > div {
