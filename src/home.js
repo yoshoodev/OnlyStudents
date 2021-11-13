@@ -17,6 +17,7 @@ import { gsap } from "gsap";
 import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
 import { OUser, userConverter } from "./userops";
 import Swal from "sweetalert2";
+import barbaPrefetch from "@barba/prefetch";
 
 Storage.prototype.setObject = function (key, value) {
   this.setItem(key, JSON.stringify(value));
@@ -45,10 +46,12 @@ var osuser = new OUser();
 var curuser = null;
 
 Aos.init();
+barba.use(barbaPrefetch);
 
 barba.init({
   transitions: [
     {
+      sync: false,
       name: "opacity-transition",
       leave(data) {
         return gsap.to(data.current.container, {

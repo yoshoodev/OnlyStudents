@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@barba/core": "^2.9.7",
+    "@barba/prefetch": "^2.1.10",
     "animate.css": "^4.1.1",
     "aos": "^2.3.4",
     "bootstrap": "^5.1.3",

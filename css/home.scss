@@ -27,6 +27,39 @@
   }
 }
 
+/* for Firefox */
+@-moz-keyframes my-animation {
+  from {
+    -moz-transform: translateX(100%);
+  }
+  to {
+    -moz-transform: translateX(-100%);
+  }
+}
+
+/* for Chrome */
+@-webkit-keyframes my-animation {
+  from {
+    -webkit-transform: translateX(100%);
+  }
+  to {
+    -webkit-transform: translateX(-100%);
+  }
+}
+
+@keyframes my-animation {
+  from {
+    -moz-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+  to {
+    -moz-transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
+
 // VARIABLES
 
 $font-family-base: Minion;
@@ -159,7 +192,9 @@ html.is-animating .transition-fade2 {
 }
 
 main {
-  //height: 100vh;
+  min-height: 80vh;
+  width: 100%;
+  margin-top: 0 !important;
 }
 
 .osbg {
@@ -421,7 +456,7 @@ main {
     flex-grow: 2;
   }
 
-  .card-deck > .card {
+  .card-deck .card {
     padding-left: 3rem;
     padding-right: 3rem;
   }
@@ -441,7 +476,7 @@ main {
   margin-left: 1rem;
   margin-bottom: 1rem;
   margin-top: 1rem;
-  transition: all ease-out 0.4s;
+  transition: all ease-out 0.5s;
   box-shadow: inset 0 10px 10px 0px rgba($black, 0.2);
 }
 
@@ -450,7 +485,7 @@ main {
   border-style: solid;
   border-width: 3px;
   transform: scale(1.07);
-  transition: all ease-in 0.25s;
+  transition: all ease-in 0.2s;
   box-shadow: rgba(213, 41, 65, 0.2) 0px 0px 30px 4px;
 }
 
@@ -459,7 +494,7 @@ main {
   border-style: solid;
   border-width: 3px;
   transform: scale(1.07);
-  transition: all ease-in 0.25s;
+  transition: all ease-in 0.2s;
   box-shadow: rgba($blue, 0.3) 0px 0px 30px 4px;
 }
 
@@ -468,6 +503,8 @@ main {
   justify-items: center;
   justify-content: center;
   align-items: center;
+  text-decoration: none;
+  cursor: default;
 }
 
 .card-body {
@@ -564,4 +601,233 @@ main {
     border-color: $background;
     //background-blend-mode: color-dodge;
   }
+}
+
+//SPECIAL
+
+.sidebar {
+  //position: sticky;
+  overflow: scroll;
+  scrollbar-width: 0 !important;
+  width: 15.3rem !important;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent !important;
+  justify-content: flex-start;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    display: none;
+  }
+  .maincontentdeck {
+    flex-direction: column;
+    width: 100%;
+    flex-grow: 1;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+    overflow-x: hidden !important;
+  }
+  .maincontentdeck > .cardwrap > .card {
+    max-width: 80vw;
+    max-height: 45vw;
+  }
+  [data-barba-namespace="special"] {
+    max-height: 56vh !important;
+    overflow-x: hidden !important;
+    overflow-y: scroll;
+    min-height: 0 !important;
+
+    overflow: scroll !important;
+  }
+}
+
+.sidebarbtn {
+  width: 13.8rem;
+  height: 2.2rem;
+  margin-top: 1rem;
+  font-family: SegoeScript;
+  background-color: $primary;
+  border-style: solid;
+  border-width: 3px;
+  border-color: $blue;
+  color: $white;
+}
+
+.collapse > .sidebarbtn {
+  width: 11rem !important;
+  margin-left: 2.85rem;
+  margin-right: 0rem;
+}
+
+.collapsing > .sidebarbtn {
+  width: 11rem !important;
+  margin-left: 2.85rem;
+  margin-right: 0rem;
+}
+
+[data-barba-namespace="special"] {
+  display: flex;
+  flex-grow: 1;
+  overflow-x: hidden;
+  overflow-y: scroll !important;
+  max-height: 85vh;
+  position: absolute;
+  width: 100%;
+}
+
+.maincontent {
+  background-color: transparent;
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 1rem;
+  overflow-y: scroll !important;
+  overflow-x: hidden;
+}
+
+.maincontentdeck {
+  align-content: space-around;
+  justify-content: space-evenly !important;
+}
+.maincontentdeck > .cardwrap > .card {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  width: 18rem !important;
+  height: 10.13rem !important;
+  border-radius: 1rem;
+}
+
+footer {
+  position: fixed;
+  bottom: 0px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  background-color: $background;
+  text-align: left;
+  white-space: 0;
+  align-items: center;
+  font-family: SegoeScript;
+  color: $white;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  user-select: none;
+  margin-bottom: 1px;
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.content {
+  width: 18rem;
+  height: 100%;
+}
+
+.cardwrap {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  transition: all ease-out 0.4s;
+}
+
+.cardwrap:hover {
+  transform: scale(1.07);
+  transition: all ease-in 0.2s;
+}
+
+.cardwrap:focus {
+  transform: scale(1.07);
+  transition: all ease-in 0.2s;
+}
+
+.card-deck .cardwrap .card {
+  background-color: $primary;
+  transition: all ease-out 0.5s;
+  box-shadow: inset 0 10px 10px 0px rgba($black, 0.2);
+  border-style: solid;
+  border-color: rgba($red, 0.5);
+  border-width: 3px;
+}
+.card-deck .cardwrap .card:hover {
+  box-shadow: rgba(213, 41, 65, 0.2) 0px 0px 30px 4px;
+  transition: all ease-in 0.2s;
+  transform: scale(1.1);
+}
+
+.cardtt {
+  display: flex;
+  justify-content: start;
+  align-content: center;
+  padding-top: 0.35rem;
+  background-color: $primary;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  border-radius: 1500px;
+  border-color: rgba($red, 0.5);
+  border-width: 3px;
+  border-style: solid;
+  padding-bottom: 0.2rem;
+  font-family: SegoeScript;
+  color: $white;
+  width: 60%;
+  margin-right: 1rem;
+  height: 2.5rem;
+  flex-grow: 1;
+  transition: all ease-out 0.5s;
+}
+
+.cardtt:hover {
+  //box-shadow: rgba(213, 41, 65, 0.2) 0px 0px 30px 4px;
+  transition: all ease-in 0.2s;
+}
+
+.titlebar {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.vddwn {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding-top: 5px;
+  height: 2.5rem;
+  width: 2.5rem;
+  background-color: $primary;
+  border-style: solid;
+  border-color: rgba($red, 0.5);
+  border-width: 3px;
+  transition: all ease-out 0.3s;
+}
+
+.vddwn:hover {
+  box-shadow: rgba(213, 41, 65, 0.2) 0px 0px 30px 4px;
+  transition: all ease-in 0.2s;
+  transform: scale(1.2);
+}
+
+.vddwn svg {
+  transform: scale(1.1);
+  fill: $white;
 }
