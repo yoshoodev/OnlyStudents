@@ -710,14 +710,13 @@ main {
 }
 
 footer {
-  position: fixed;
-  bottom: 0px;
+  position: relative;
+  bottom: 8px;
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: space-between;
   background-color: $background;
-  text-align: left;
-  white-space: 0;
   align-items: center;
   font-family: SegoeScript;
   color: $white;
@@ -725,11 +724,16 @@ footer {
   padding-right: 1rem;
   user-select: none;
   margin-bottom: 1px;
+  overflow-wrap: break-word !important;
+}
+
+footer > div {
+  overflow-wrap: break-word !important;
 }
 
 body {
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .content {
