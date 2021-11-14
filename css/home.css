@@ -11575,6 +11575,7 @@ main {
   flex-direction: column !important;
   justify-content: center;
   align-items: center;
+  margin-top: 1rem;
 }
 
 .profileswalhtml > h2, .profileswalhtml > .h2 {
@@ -11599,15 +11600,22 @@ main {
 }
 
 .profilepicswal {
+  margin-top: 1rem !important;
   border-color: #3b7db3;
   border-width: 3px;
   border-style: solid;
-  margin-top: 0;
   margin-bottom: 1rem;
-  max-height: 120px;
-  max-width: 120px;
-  height: auto;
-  width: auto;
+  height: 120px;
+  width: 120px;
+  cursor: pointer;
+  transition: all ease-out 0.4s;
+}
+
+.profilepicswal:hover {
+  transform: scale(1.2);
+  transition: all ease-in 0.2s;
+  box-shadow: rgba(213, 41, 65, 0.2) 0px 0px 10px 4px;
+  border-color: #d52941;
 }
 
 #btnsave {
@@ -12176,4 +12184,32 @@ body {
 
 #videobtnsp svg {
   fill: #3b7db3;
+}
+
+.profilepicedithtml {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+#preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 1000rem;
+  margin-bottom: 0.5rem;
+}
+
+.cropperdiv {
+  background-color: #d52941;
+  transition: all ease-in 0.9s;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.cropperdiv img {
+  margin-top: 1rem;
+  min-width: 40vw;
+  min-height: 30vh;
 }/*# sourceMappingURL=home.css.map */

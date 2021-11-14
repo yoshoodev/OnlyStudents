@@ -306,6 +306,48 @@ document.getElementById("profilepicture").onclick = function () {
           console.log("User does'nt have a default photo genarated, WEEEIRD");
         }
 
+        document.getElementById("profileimg").onclick = function () {
+          const profilePicSwal = Swal.mixin({
+            customClass: {
+              htmlContainer: "profilepicedithtml",
+            },
+          });
+          profilePicSwal.fire({
+            title: "Edit Profile Picture",
+            html: `<img id="preview" src="/images/picture.jpg">
+            <div class="cropperdiv" style="display: none"><input class="form-control" type="file" id="formFile"></input><img id="cropperjs" src="/images/picture.jpg"></div>
+            <button id="editbtn" class="btn btn-primary">Edit Photo</button>
+          `,
+            didOpen: () => {
+              document.getElementById("preview").src = curuser.photoURL;
+            },
+            didRender: () => {
+              var cropopen = 0;
+              Swal.getHtmlContainer().querySelector("#editbtn").onclick =
+                function () {
+                  if (cropopen == 0) {
+                    Swal.getHtmlContainer().querySelector(
+                      ".cropperdiv"
+                    ).style.display = "block";
+                    cropopen = 1;
+                  } else {
+                    cropopen = 0;
+                    Swal.getHtmlContainer().querySelector(
+                      ".cropperdiv"
+                    ).style.display = "none";
+                  }
+                };
+              Swal.getHtmlContainer().querySelector("#formFile").onchange =
+                function () {
+                  console.log("File Uploaded");
+
+                  Swal.getHtmlContainer().querySelector("#cropperjs").src =
+                    Swal.getHtmlContainer().querySelector("#formFile").value;
+                };
+            },
+          });
+        };
+
         document.getElementById("btnsave").onclick = function () {
           const uname = document.getElementById("uname").value;
           const name = document.getElementById("namef").value;

@@ -2,7 +2,7 @@ const path = require("path");
 
 module.exports = {
   entry: {
-    home: "./src/home.js",
+    home: "./src/navbar.js",
     index: "./src/index.js",
     reset: "./src/passwordreset.js",
   },
