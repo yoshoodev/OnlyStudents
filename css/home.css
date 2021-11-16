@@ -11360,6 +11360,7 @@ textarea.form-control-lg {
 .swal2-confirm {
   border-radius: 5rem !important;
   background-color: #3b7db3 !important;
+  transition: all ease-in 0.4s;
 }
 
 .swal2-cancel {
@@ -11605,8 +11606,8 @@ main {
   border-width: 3px;
   border-style: solid;
   margin-bottom: 1rem;
-  height: 120px;
-  width: 120px;
+  max-height: 100px;
+  max-width: 100px;
   cursor: pointer;
   transition: all ease-out 0.4s;
 }

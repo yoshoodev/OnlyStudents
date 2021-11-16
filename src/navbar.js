@@ -18,6 +18,7 @@ import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
 import { OUser, userConverter } from "./userops";
 import Swal from "sweetalert2";
 import barbaPrefetch from "@barba/prefetch";
+import { _checkPlugin } from "gsap/gsap-core";
 
 console.log("Initializing Auth and Navbar script !");
 
@@ -287,19 +288,19 @@ document.getElementById("profilepicture").onclick = function () {
       <h2 style="margin-top: 0">Username: <input class="form-control rounded-pill" type="text" placeholder="username" id="uname" value="username"></h2>
       <h2 style="margin-top: 0">Email: <input class="form-control rounded-pill" type="email" placeholder="email@example.com" id="email" value="email@example.com"></h2>
       <div class="buttonsonf d-flex">
-      <button id="btnsave" class="swal2-confirm swal2-styled">SAVE</button>
-      <button id="btndelete" class="swal2-cancel swal2-styled">DELETE USER</button>
-      <button id="btnpassw" class="swal2-confirm swal2-styled">PASSWORD</button>
+      <button id="btndelete" class="swal2-cancel swal2-styled">Delete User</button>
+      <button id="btnpassw" class="swal2-confirm swal2-styled">Change Password</button>
       </div>
     `,
       showCancelButton: true,
-      cancelButtonText: "CLOSE",
-      confirmButtonText: "OK",
+      cancelButtonText: "Close",
+      confirmButtonText: "Ok",
       backdrop: true,
       didOpen: () => {
         document.getElementById("namef").value = osuser.name;
         document.getElementById("uname").value = osuser.username;
         document.getElementById("email").value = curuser.email;
+
         if (curuser.photoURL != null) {
           document.getElementById("profileimg").src = curuser.photoURL;
         } else {
@@ -348,77 +349,6 @@ document.getElementById("profilepicture").onclick = function () {
           });
         };
 
-        document.getElementById("btnsave").onclick = function () {
-          const uname = document.getElementById("uname").value;
-          const name = document.getElementById("namef").value;
-          const email = document.getElementById("email").value;
-          const good = isUserNameValid(uname);
-
-          function check() {
-            if (
-              osuser.name == name &&
-              osuser.username == uname &&
-              osuser.email == email
-            ) {
-              console.log("SAME CREDS");
-              Swal.showValidationMessage(`Info can't be the same !`);
-              return false;
-            } else {
-              console.log("GTG");
-              return true;
-            }
-          }
-
-          const checkVar = check();
-
-          if (good == true && checkVar == true) {
-            updateUserDB(localuid, name, uname);
-            const photogen = new String(
-              "https://avatars.dicebear.com/api/adventurer-neutral/" +
-                uname +
-                ".svg"
-            );
-            //Update Profile in AUTH
-            updateProfile(curuser, {
-              displayName: uname,
-              photoURL: photogen,
-            })
-              .then(() => {})
-              .catch((error) => {});
-            //END
-            //UPDATE EMAIL
-            updateEmail(auth.currentUser, email)
-              .then(() => {
-                // Email updated!
-                // ...
-              })
-              .catch((error) => {
-                // An error occurred
-                // ...
-              });
-            //
-            osuser.name = name;
-            osuser.username = uname;
-            saveUserToLS(osuser, localuid);
-            Swal.fire({
-              title: "User Details Saved",
-              text: "User info saved successfully !",
-              showCancelButton: false,
-              showConfirmButton: true,
-              showCloseButton: false,
-              icon: "success",
-            })
-              .then((result) => {
-                if (result.isConfirmed) {
-                  location.reload();
-                  return false;
-                }
-              })
-              .catch((err) => {});
-          } else {
-          }
-        };
-
         document.getElementById("btndelete").onclick = function () {
           const profileSwal = Swal.mixin({
             customClass: {
@@ -431,7 +361,7 @@ document.getElementById("profilepicture").onclick = function () {
               text: "",
               html: `Are you sure you want to delete your account ?\nInput your current password down below !
             <input type="password" id="passwd3" class="swal2-input" placeholder="Password">`,
-              confirmButtonText: "DELETE",
+              confirmButtonText: "Delete Profile",
               focusConfirm: false,
               preConfirm: () => {
                 const password =
@@ -644,6 +574,54 @@ document.getElementById("profilepicture").onclick = function () {
             }
           });
         };
+
+        function updateSVBTN() {
+          const uname = document.getElementById("uname").value;
+          const name = document.getElementById("namef").value;
+          const email = document.getElementById("email").value;
+          const good = isUserNameValid(uname);
+          function check() {
+            if (
+              osuser.name == name &&
+              osuser.username == uname &&
+              osuser.email == email
+            ) {
+              return false;
+            } else {
+              return true;
+            }
+          }
+          const button1 = Swal.getConfirmButton();
+          if (check() == true) {
+            button1.setAttribute(
+              "style",
+              "background-color: #419d78 !important"
+            );
+            button1.innerHTML = "Save";
+          } else if (check() == false) {
+            button1.setAttribute(
+              "style",
+              "background-color: #3b7db3 !important"
+            );
+            button1.innerHTML = "Ok";
+          } else {
+            button1.setAttribute(
+              "style",
+              "background-color: #3b7db3 !important"
+            );
+            button1.innerHTML = "Ok";
+          }
+        }
+
+        document.getElementById("namef").onkeyup = function () {
+          updateSVBTN();
+        };
+        document.getElementById("uname").onkeyup = function () {
+          updateSVBTN();
+        };
+        document.getElementById("email").onkeyup = function () {
+          updateSVBTN();
+        };
       },
       allowOutsideClick: () => {
         const popup = Swal.getPopup();
@@ -657,6 +635,74 @@ document.getElementById("profilepicture").onclick = function () {
         return false;
       },
     })
-    .then((result) => {})
+    .then((result) => {
+      if (result.isConfirmed) {
+        const uname = document.getElementById("uname").value;
+        const name = document.getElementById("namef").value;
+        const email = document.getElementById("email").value;
+        const good = isUserNameValid(uname);
+
+        function check() {
+          if (
+            osuser.name == name &&
+            osuser.username == uname &&
+            osuser.email == email
+          ) {
+            return false;
+          } else {
+            return true;
+          }
+        }
+
+        const checkVar = check();
+
+        if (good == true && checkVar == true) {
+          updateUserDB(localuid, name, uname);
+          const photogen = new String(
+            "https://avatars.dicebear.com/api/adventurer-neutral/" +
+              uname +
+              ".svg"
+          );
+          //Update Profile in AUTH
+          updateProfile(curuser, {
+            displayName: uname,
+            photoURL: photogen,
+          })
+            .then(() => {})
+            .catch((error) => {});
+          //END
+          //UPDATE EMAIL
+          updateEmail(auth.currentUser, email)
+            .then(() => {
+              // Email updated!
+              // ...
+            })
+            .catch((error) => {
+              // An error occurred
+              // ...
+            });
+          //
+          osuser.name = name;
+          osuser.username = uname;
+          saveUserToLS(osuser, localuid);
+          Swal.fire({
+            title: "User Details Saved",
+            text: "User info saved successfully !",
+            showCancelButton: false,
+            showConfirmButton: true,
+            showCloseButton: false,
+            icon: "success",
+          })
+            .then((result) => {
+              if (result.isConfirmed) {
+                location.reload();
+                return false;
+              }
+            })
+            .catch((err) => {});
+        } else {
+        }
+      }
+    })
     .catch((err) => {});
 };
