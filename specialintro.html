@@ -18,7 +18,7 @@
 
   <body class="osbg" data-barba="wrapper">
     <nav class="navbar navbar-expand d-flex flex-sm-row" id="nobgmine">
-      <a
+      <button
         class="
           user-select-none
           rounded-pill
@@ -30,25 +30,46 @@
         "
         href="home.html"
         id="onlystudentslogo"
-        ><span style="font-family: SegoeScript; color: #d52941">Only</span
-        >Students</a
       >
-      <div class="container-fluid flex-sm-row my-sm-0 justify-content-start">
-        <button
-          id="profilepicture"
-          class="rounded-circle bg-dark text-white p-2 my-sm-0 icon mx-2"
-        ></button>
-        <div
-          id="username"
-          class="usrname text-white rounded-pill bg-dark p-2 my-sm-0"
-        ></div>
-      </div>
-      <button
-        class="btn btn-primary rounded-pill bg-dark mx-sm-4"
-        id="logoutbtn"
-      >
-        Log-Out
+        <span style="font-family: SegoeScript; color: #d52941">Only</span
+        >Students
       </button>
+      <div
+        class="
+          container-fluid
+          flex-sm-row
+          my-sm-0
+          justify-content-between
+          d-sm-flex
+          animate__animated
+        "
+        id="menuitems"
+      >
+        <div
+          class="
+            profilebar
+            d-flex
+            flex-row
+            justify-content-center
+            align-content-center align-items-center
+          "
+        >
+          <button
+            id="profilepicture"
+            class="rounded-circle bg-dark text-white p-2 my-sm-0 icon mx-2"
+          ></button>
+          <div
+            id="username"
+            class="usrname text-white rounded-pill bg-dark p-2 my-sm-0"
+          ></div>
+        </div>
+        <button
+          class="btn btn-primary rounded-pill bg-dark mx-sm-4"
+          id="logoutbtn"
+        >
+          Log-Out
+        </button>
+      </div>
     </nav>
     <main data-barba="container" data-barba-namespace="specialintro">
       <div class="cardwrapspecial d-flex flex-sm-row">
