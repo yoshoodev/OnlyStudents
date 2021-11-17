@@ -1,0 +1,6 @@
+const photogen = new String(
+  "https://avatars.dicebear.com/api/adventurer-neutral/" + uname + ".svg"
+);
+//Update Profile in AUTH
+
+photoURL: photogen;

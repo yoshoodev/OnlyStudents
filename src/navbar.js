@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import Aos, { init } from "aos";
+//import Aos, { init } from "aos";
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -27,7 +27,7 @@ import barbaPrefetch from "@barba/prefetch";
 import { _checkPlugin } from "gsap/gsap-core";
 import Cropper from "cropperjs";
 
-console.log("Initializing Auth and Navbar script !");
+//console.log("Initializing Auth and Navbar script !");
 
 Storage.prototype.setObject = function (key, value) {
   this.setItem(key, JSON.stringify(value));
@@ -61,58 +61,7 @@ var logoOpen = false;
 var userFolderStr = "null";
 var userFolderRef = null;
 var userImageFolderStr = "null";
-var profilefromLS = null;
-var downloadedImg = new Image();
-var profileData = null;
-
-/**
- * Converts image URLs to dataURL schema using Javascript only.
- *
- * @param {String} url Location of the image file
- * @param {Function} success Callback function that will handle successful responses. This function should take one parameter
- *                            <code>dataURL</code> which will be a type of <code>String</code>.
- * @param {Function} error Error handler.
- *
- * @example
- * var onSuccess = function(e){
- *  document.body.appendChild(e.image);
- *  alert(e.data);
- * };
- *
- * var onError = function(e){
- *  alert(e.message);
- * };
- *
- * getImageDataURL('myimage.png', onSuccess, onError);
- *
- */
-function getImageDataURL(url, success, error) {
-  var data, canvas, ctx;
-  var img = new Image();
-  // /img.crossOrigin = "Anonymous";
-  img.onload = function () {
-    // Create the canvas element.
-    canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
-    // Get '2d' context and draw the image.
-    ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-    // Get canvas data URL
-    try {
-      data = canvas.toDataURL();
-      success({ image: img, data: data });
-    } catch (e) {
-      error(e);
-    }
-  };
-  // Load image URL.
-  try {
-    img.src = url;
-  } catch (e) {
-    error(e);
-  }
-}
+var profilePicData = null;
 
 // Initialize Authentication observer and log-out users if != present
 onAuthStateChanged(auth, (user) => {
@@ -122,31 +71,44 @@ onAuthStateChanged(auth, (user) => {
     document.getElementById("username").innerHTML = "" + user.displayName;
     //getUserFromDB(user.uid);
 
+    //initialize Variables
     localuid = user.uid;
     curuser = user;
     profilepic = user.photoURL;
     userFolderStr = "user/" + localuid;
     userFolderRef = ref(storage, userFolderStr);
     userImageFolderStr = userFolderStr + "/images/";
-    const profpicurl = user.photoURL;
 
-    downloadedImg.src = profpicurl;
-
-    const onSuccess = function (e) {
-      //document.body.appendChild(e.image);
-      //alert(e.data);
-      profileData = e.data;
-    };
-
-    const onError = function (e) {
-      //alert(e.message);
-    };
-    getImageDataURL(profpicurl, onSuccess, onError);
-
-    console.log(downloadedImg);
-
-    document.getElementById("profilepicture").style.backgroundImage =
-      "data:image/png;base64," + profileData;
+    if (
+      localStorage.getItem("profileUrl") == 0 ||
+      localStorage.getItem("profileUrl") == null
+    ) {
+      //console.log("Profile Picture Url was empty. Adding !");
+      localStorage.setItem("profileUrl", profilepic);
+      toDataURL(profilepic, function (dataUrl) {
+        //console.log("DURL:", dataUrl);
+        profilePicData = dataUrl;
+        localStorage.setItem("profilepic", profilePicData);
+        document.getElementById("profilepicture").style.backgroundImage =
+          "url(" + profilePicData + ")";
+      });
+    } else if (localStorage.getItem("profileUrl") == profilepic) {
+      profilePicData = localStorage.getItem("profilepic");
+      document.getElementById("profilepicture").style.backgroundImage =
+        "url(" + profilePicData + ")";
+      //console.log("Loaded Pic from LS");
+    } else {
+      //console.log("Profile Picture was changed, reloading LS");
+      localStorage.removeItem("profileUrl");
+      localStorage.setItem("profileUrl", profilepic);
+      toDataURL(profilepic, function (dataUrl) {
+        //console.log("DURL:", dataUrl);
+        profilePicData = dataUrl;
+        localStorage.setItem("profilepic", profilePicData);
+        document.getElementById("profilepicture").style.backgroundImage =
+          "url(" + profilePicData + ")";
+      });
+    }
 
     asyncCheckUEAS(osuser, user.uid)
       .then((result) => {
@@ -160,6 +122,8 @@ onAuthStateChanged(auth, (user) => {
     console.log("User is not Signed IN");
     //window.location.href = "/index.html";
     deleteSavedUser(localuid);
+    localStorage.removeItem("profileUrl");
+    localStorage.removeItem("profilepic");
     window.location.replace("/index.html");
     // ...
   }
@@ -167,7 +131,7 @@ onAuthStateChanged(auth, (user) => {
 
 // Animate on scroll
 
-Aos.init();
+//Aos.init();
 
 //Barba Animations
 
@@ -201,12 +165,24 @@ barba.hooks.after(() => {
   newScript.className = "main-script";
   oldScript.remove();
   bottomDOM.appendChild(newScript);
-  console.log("Re-initialized script on page change");
+  //console.log("Re-initialized script on page change");
 });
 
-//
+//Data Conversion Functions
 
-// Set Refrences
+function toDataURL(url, callback) {
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+    var reader = new FileReader();
+    reader.onloadend = function () {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(xhr.response);
+  };
+  xhr.open("GET", url);
+  xhr.responseType = "blob";
+  xhr.send();
+}
 
 //User LocalStorage and DataBase functions
 
@@ -310,6 +286,7 @@ async function updateUserDB(uid, name, username, email) {
   await updateDoc(docRef, {
     name: name,
     username: username,
+    email: email,
   });
 }
 
@@ -387,13 +364,14 @@ document.getElementById("profilepicture").onclick = function () {
         document.getElementById("email").value = curuser.email;
 
         if (curuser.photoURL != null) {
-          document.getElementById("profileimg").src = curuser.photoURL;
+          document.getElementById("profileimg").src = profilePicData;
         } else {
           console.log("User does'nt have a default photo genarated, WEEEIRD");
         }
 
         document.getElementById("profileimg").onclick = function () {
           var imgFile2 = null;
+          var pchange = 0;
           const profilePicSwal = Swal.mixin({
             customClass: {
               htmlContainer: "profilepicedithtml",
@@ -403,19 +381,22 @@ document.getElementById("profilepicture").onclick = function () {
             .fire({
               title: "Edit Profile Picture",
               html: `<img id="preview" src="">
-            <div class="cropperdiv" style="display: none"><input class="form-control" type="file" id="formFile"></input><div class="cropdiv"><img id="cropimg"></img></div></div>
-            <button id="editbtn" class="btn btn-primary">Edit Photo</button>
+            <div class="cropperdiv" style="display: none"><input class="form-control" type="file" id="formFile" accept="image/png, image/gif, image/jpeg, image/svg"></input><div class="cropdiv"><img id="cropimg"></img></div></div>
+            <button id="editbtn" class="btn btn-primary">Change Photo</button>
           `,
+              confirmButtonText: "Ok",
               didOpen: () => {
-                document.getElementById("preview").src = curuser.photoURL;
+                document.getElementById("preview").src = profilePicData;
               },
               didRender: () => {
                 var cropopen = 0;
                 var image = Swal.getHtmlContainer().querySelector("#cropimg");
-                image.src = curuser.photoURL;
+                image.src = profilePicData;
                 var cropper = new Cropper(image, {
                   aspectRatio: 1,
                   viewMode: 1,
+                  guides: false,
+                  center: false,
                   minContainerWidth: 120,
                   minContainerHeight: 120,
                   minCanvasWidth: 120,
@@ -437,7 +418,7 @@ document.getElementById("profilepicture").onclick = function () {
                         minHeight: 120,
                         maxWidth: 4096,
                         maxHeight: 4096,
-                        fillColor: "#fff",
+                        fillColor: "#26272c",
                         imageSmoothingEnabled: false,
                         imageSmoothingQuality: "high",
                       });
@@ -457,7 +438,7 @@ document.getElementById("profilepicture").onclick = function () {
                     if (cropopen == 0) {
                       Swal.getHtmlContainer().querySelector(
                         ".cropperdiv"
-                      ).style.display = "block";
+                      ).style.display = "flex";
                       cropopen = 1;
                     } else {
                       cropopen = 0;
@@ -469,7 +450,13 @@ document.getElementById("profilepicture").onclick = function () {
 
                 Swal.getHtmlContainer().querySelector("#formFile").onchange =
                   function () {
-                    console.log("File Uploaded");
+                    pchange = 1;
+                    Swal.getConfirmButton().innerHTML = "Save";
+                    Swal.getConfirmButton().setAttribute(
+                      "style",
+                      "background-color: #419d78 !important"
+                    );
+                    //console.log("File Uploaded");
                     var imgFile =
                       Swal.getHtmlContainer().querySelector("#formFile")
                         .files[0];
@@ -490,54 +477,66 @@ document.getElementById("profilepicture").onclick = function () {
               },
             })
             .then((result) => {
-              if (result.isConfirmed) {
+              if (result.isConfirmed && pchange == 1) {
                 const cropimg = imgFile2;
                 const path = userImageFolderStr + cropimg.name;
                 const storageRef = ref(storage, path);
                 const uploadTask = uploadBytesResumable(storageRef, cropimg);
-                uploadTask.on(
-                  "state_changed",
-                  (snapshot) => {
-                    switch (snapshot.state) {
-                      case "paused":
-                        console.log("Upload is paused");
-                        break;
-                      case "running":
-                        console.log("Upload is running");
-                        break;
-                    }
-                  },
-                  (error) => {
-                    // A full list of error codes is available at
-                    // https://firebase.google.com/docs/storage/web/handle-errors
-                    switch (error.code) {
-                      case "storage/unauthorized":
-                        // User doesn't have permission to access the object
-                        break;
-                      case "storage/canceled":
-                        // User canceled the upload
-                        break;
+                Swal.fire({
+                  title: "Icon Change Success",
+                  html: "Reloading page when complete.",
+                  icon: "success",
+                  timerProgressBar: true,
+                  didOpen: () => {
+                    Swal.showLoading();
+                    uploadTask.on(
+                      "state_changed",
+                      (snapshot) => {
+                        switch (snapshot.state) {
+                          case "paused":
+                            //console.log("Upload is paused");
+                            break;
+                          case "running":
+                            break;
+                        }
+                      },
+                      (error) => {
+                        // A full list of error codes is available at
+                        // https://firebase.google.com/docs/storage/web/handle-errors
+                        switch (error.code) {
+                          case "storage/unauthorized":
+                            // User doesn't have permission to access the object
+                            break;
+                          case "storage/canceled":
+                            // User canceled the upload
+                            break;
 
-                      // ...
+                          // ...
 
-                      case "storage/unknown":
-                        // Unknown error occurred, inspect error.serverResponse
-                        break;
-                    }
-                  },
-                  () => {
-                    // Upload completed successfully, now we can get the download URL
-                    getDownloadURL(uploadTask.snapshot.ref).then(
-                      (downloadURL) => {
-                        updateProfile(curuser, {
-                          photoURL: downloadURL,
-                        })
-                          .then(() => {})
-                          .catch((error) => {});
+                          case "storage/unknown":
+                            // Unknown error occurred, inspect error.serverResponse
+                            break;
+                        }
+                      },
+                      () => {
+                        // Upload completed successfully, now we can get the download URL
+                        getDownloadURL(uploadTask.snapshot.ref).then(
+                          (downloadURL) => {
+                            updateProfile(curuser, {
+                              photoURL: downloadURL,
+                            })
+                              .then(() => {
+                                Swal.close();
+                                location.reload();
+                              })
+                              .catch((error) => {});
+                          }
+                        );
                       }
                     );
-                  }
-                );
+                  },
+                  willClose: () => {},
+                }).then((result) => {});
               }
             })
             .catch((err) => {});
@@ -851,33 +850,29 @@ document.getElementById("profilepicture").onclick = function () {
         const checkVar = check();
 
         if (good == true && checkVar == true) {
-          updateUserDB(localuid, name, uname);
-          const photogen = new String(
-            "https://avatars.dicebear.com/api/adventurer-neutral/" +
-              uname +
-              ".svg"
-          );
-          //Update Profile in AUTH
+          updateUserDB(localuid, name, uname, email);
           updateProfile(curuser, {
             displayName: uname,
-            photoURL: photogen,
           })
-            .then(() => {})
+            .then(() => {
+              updateEmail(curuser, email)
+                .then(() => {
+                  // Email updated!
+                  // ...
+                })
+                .catch((error) => {
+                  // An error occurred
+                  // ...
+                });
+            })
             .catch((error) => {});
           //END
           //UPDATE EMAIL
-          updateEmail(auth.currentUser, email)
-            .then(() => {
-              // Email updated!
-              // ...
-            })
-            .catch((error) => {
-              // An error occurred
-              // ...
-            });
+
           //
           osuser.name = name;
           osuser.username = uname;
+          osuser.email = email;
           saveUserToLS(osuser, localuid);
           Swal.fire({
             title: "User Details Saved",

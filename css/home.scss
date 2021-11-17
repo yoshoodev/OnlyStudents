@@ -70,10 +70,11 @@ $rgba-red: rgba(213, 41, 65, 1);
 $white: #f3f3f3;
 $blue: #3b7db3;
 $bd-color: $blue;
+$green: #419d78;
 $yellow: #ffc857;
-
+$form-file-button-bg: #3b7db3;
+//$form-file-button-hover-bg: $background;
 // IMPORT BOOTSTRAP HERE #5295cb
-
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 // CUSTOM CSS AFTER BOOTSTRAP (use !important for override)
@@ -960,7 +961,7 @@ body {
 }
 
 .cropperdiv {
-  background-color: $red;
+  background-color: $primary;
   transition: all ease-in 0.9s;
   margin-bottom: 1rem;
   margin-top: 1rem;
@@ -980,4 +981,65 @@ body {
   height: 120px;
   margin-bottom: 10px;
   border-radius: 100%;
+  border-width: 3px;
+  border-color: $blue;
+  border-style: solid;
+}
+
+.cropper-view-box {
+  box-sizing: border-box !important;
+  outline: none !important;
+  border-color: $red !important;
+  border-width: 3px !important;
+  border-style: solid;
+  border-radius: 5px !important;
+}
+
+.cropperdiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#formFile {
+  margin-bottom: 1rem;
+  width: 80%;
+  background-color: $background;
+  color: $white;
+  border-color: $blue;
+  //border-width: 2px;
+}
+
+#formFile:hover {
+  margin-bottom: 1rem;
+  width: 80%;
+  background-color: $background;
+  color: $white;
+  border-color: $blue;
+  //border-width: 2px;
+}
+#formFile:focus {
+  margin-bottom: 1rem;
+  width: 80%;
+  background-color: $background;
+  color: $white;
+  border-color: $blue;
+  //border-width: 2px;
+}
+
+#editbtn {
+  background-color: $yellow;
+  border-radius: 5rem;
+}
+
+#editbtn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+#editbtn:hover {
+  outline: none;
+  box-shadow: none;
+  background-color: $yellow-600;
 }
