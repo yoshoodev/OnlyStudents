@@ -122,8 +122,6 @@ onAuthStateChanged(auth, (user) => {
     console.log("User is not Signed IN");
     //window.location.href = "/index.html";
     deleteSavedUser(localuid);
-    localStorage.removeItem("profileUrl");
-    localStorage.removeItem("profilepic");
     window.location.replace("/index.html");
     // ...
   }
@@ -217,39 +215,52 @@ function checkSavedUser(uid) {
 function deleteSavedUser(uid) {
   if (uid != null) {
     localStorage.removeItem(uid);
+    localStorage.removeItem("profileUrl");
+    localStorage.removeItem("profilepic");
     console.log("Removed User Data");
     console.log(importUFLS(uid));
   } else {
     console.log("Can't delete what i dont have :D");
+    localStorage.removeItem("profileUrl");
+    localStorage.removeItem("profilepic");
   }
 }
 
 async function asyncCheckUEAS(userobj = new OUser(), user) {
   if (checkSavedUser(user.uid) == true) {
-    console.log("SAVED BEFORE CHECK");
+    //console.log("SAVED BEFORE CHECK");
     const userobjwait = await importUFLS(user.uid);
     userobj = userobjwait;
-    console.log(user.displayName, user.email);
-    console.log("OBJ:", userobj);
+    //console.log(user.displayName, user.email);
+    //console.log("OBJ:", userobj);
     if (user.displayName == userobj.username && user.email == userobj.email) {
-      console.log("Data is identical");
+      //console.log("Data is identical");
       return userobj;
     } else {
-      console.log("Data is mismatched, reloading from DB");
+      //console.log("Data is mismatched, reloading from DB");
       userobj = null;
       const userobjwait = await getUserFromDB(user.uid);
       saveUserToLS(userobjwait, user.uid);
       userobj = userobjwait;
-      console.log("New UserObj:", userobj);
+      //console.log("New UserObj:", userobj);
       return userobj;
     }
   } else {
-    console.log("GETTING DB");
+    //console.log("GETTING DB");
     const userobjwait = await getUserFromDB(user.uid);
     saveUserToLS(userobjwait, user.uid);
     userobj = userobjwait;
     return userobj;
   }
+}
+
+async function forceReloadUserFromDB(userobj = new OUser(), user) {
+  userobj = null;
+  deleteSavedUser(user.uid);
+  const userobjwait = await getUserFromDB(user.uid);
+  saveUserToLS(userobjwait, user.uid);
+  userobj = userobjwait;
+  return userobj;
 }
 
 function importUFLS(uid) {
