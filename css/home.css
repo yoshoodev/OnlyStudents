@@ -12216,12 +12216,18 @@ body {
   margin-top: 1rem;
 }
 
-.cropperdiv img {
-  margin-top: 1rem;
-  min-width: 40vw;
-  min-height: 30vh;
-}
-
 #menuitems {
   display: none;
+}
+
+#cropimg {
+  display: block;
+  max-width: 100% !important;
+}
+
+#preview {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 10px;
+  border-radius: 100%;
 }/*# sourceMappingURL=home.css.map */

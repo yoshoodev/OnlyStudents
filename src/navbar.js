@@ -12,6 +12,12 @@ import {
   reauthenticateWithCredential,
   EmailAuthProvider,
 } from "firebase/auth";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 import barba from "@barba/core";
 import { gsap } from "gsap";
 import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
@@ -19,6 +25,7 @@ import { OUser, userConverter } from "./userops";
 import Swal from "sweetalert2";
 import barbaPrefetch from "@barba/prefetch";
 import { _checkPlugin } from "gsap/gsap-core";
+import Cropper from "cropperjs";
 
 console.log("Initializing Auth and Navbar script !");
 
@@ -44,12 +51,68 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
+const storage = getStorage();
 
 var osuser = new OUser();
 var curuser = null;
 var localuid = null;
 var profilepic = null;
 var logoOpen = false;
+var userFolderStr = "null";
+var userFolderRef = null;
+var userImageFolderStr = "null";
+var profilefromLS = null;
+var downloadedImg = new Image();
+var profileData = null;
+
+/**
+ * Converts image URLs to dataURL schema using Javascript only.
+ *
+ * @param {String} url Location of the image file
+ * @param {Function} success Callback function that will handle successful responses. This function should take one parameter
+ *                            <code>dataURL</code> which will be a type of <code>String</code>.
+ * @param {Function} error Error handler.
+ *
+ * @example
+ * var onSuccess = function(e){
+ *  document.body.appendChild(e.image);
+ *  alert(e.data);
+ * };
+ *
+ * var onError = function(e){
+ *  alert(e.message);
+ * };
+ *
+ * getImageDataURL('myimage.png', onSuccess, onError);
+ *
+ */
+function getImageDataURL(url, success, error) {
+  var data, canvas, ctx;
+  var img = new Image();
+  // /img.crossOrigin = "Anonymous";
+  img.onload = function () {
+    // Create the canvas element.
+    canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    // Get '2d' context and draw the image.
+    ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    // Get canvas data URL
+    try {
+      data = canvas.toDataURL();
+      success({ image: img, data: data });
+    } catch (e) {
+      error(e);
+    }
+  };
+  // Load image URL.
+  try {
+    img.src = url;
+  } catch (e) {
+    error(e);
+  }
+}
 
 // Initialize Authentication observer and log-out users if != present
 onAuthStateChanged(auth, (user) => {
@@ -62,9 +125,28 @@ onAuthStateChanged(auth, (user) => {
     localuid = user.uid;
     curuser = user;
     profilepic = user.photoURL;
-    const profpicurl = new String("url(" + user.photoURL + ")");
+    userFolderStr = "user/" + localuid;
+    userFolderRef = ref(storage, userFolderStr);
+    userImageFolderStr = userFolderStr + "/images/";
+    const profpicurl = user.photoURL;
+
+    downloadedImg.src = profpicurl;
+
+    const onSuccess = function (e) {
+      //document.body.appendChild(e.image);
+      //alert(e.data);
+      profileData = e.data;
+    };
+
+    const onError = function (e) {
+      //alert(e.message);
+    };
+    getImageDataURL(profpicurl, onSuccess, onError);
+
+    console.log(downloadedImg);
+
     document.getElementById("profilepicture").style.backgroundImage =
-      profpicurl;
+      "data:image/png;base64," + profileData;
 
     asyncCheckUEAS(osuser, user.uid)
       .then((result) => {
@@ -123,6 +205,8 @@ barba.hooks.after(() => {
 });
 
 //
+
+// Set Refrences
 
 //User LocalStorage and DataBase functions
 
@@ -309,45 +393,154 @@ document.getElementById("profilepicture").onclick = function () {
         }
 
         document.getElementById("profileimg").onclick = function () {
+          var imgFile2 = null;
           const profilePicSwal = Swal.mixin({
             customClass: {
               htmlContainer: "profilepicedithtml",
             },
           });
-          profilePicSwal.fire({
-            title: "Edit Profile Picture",
-            html: `<img id="preview" src="/images/picture.jpg">
-            <div class="cropperdiv" style="display: none"><input class="form-control" type="file" id="formFile"></input><img id="cropperjs" src="/images/picture.jpg"></div>
+          profilePicSwal
+            .fire({
+              title: "Edit Profile Picture",
+              html: `<img id="preview" src="">
+            <div class="cropperdiv" style="display: none"><input class="form-control" type="file" id="formFile"></input><div class="cropdiv"><img id="cropimg"></img></div></div>
             <button id="editbtn" class="btn btn-primary">Edit Photo</button>
           `,
-            didOpen: () => {
-              document.getElementById("preview").src = curuser.photoURL;
-            },
-            didRender: () => {
-              var cropopen = 0;
-              Swal.getHtmlContainer().querySelector("#editbtn").onclick =
-                function () {
-                  if (cropopen == 0) {
-                    Swal.getHtmlContainer().querySelector(
-                      ".cropperdiv"
-                    ).style.display = "block";
-                    cropopen = 1;
-                  } else {
-                    cropopen = 0;
-                    Swal.getHtmlContainer().querySelector(
-                      ".cropperdiv"
-                    ).style.display = "none";
-                  }
-                };
-              Swal.getHtmlContainer().querySelector("#formFile").onchange =
-                function () {
-                  console.log("File Uploaded");
+              didOpen: () => {
+                document.getElementById("preview").src = curuser.photoURL;
+              },
+              didRender: () => {
+                var cropopen = 0;
+                var image = Swal.getHtmlContainer().querySelector("#cropimg");
+                image.src = curuser.photoURL;
+                var cropper = new Cropper(image, {
+                  aspectRatio: 1,
+                  viewMode: 1,
+                  minContainerWidth: 120,
+                  minContainerHeight: 120,
+                  minCanvasWidth: 120,
+                  minCanvasHeight: 120,
+                  cropBoxResizable: false,
+                  cropBoxMovable: false,
+                  toggleDragModeOnDblclick: false,
+                  dragMode: "move",
+                  background: false,
+                  autoCropArea: 1,
+                  minCropBoxWidth: 60,
+                  minCropBoxHeight: 60,
+                  crop: function () {
+                    setTimeout(() => {
+                      const croppedCanvas = cropper.getCroppedCanvas({
+                        width: 1024,
+                        height: 1024,
+                        minWidth: 120,
+                        minHeight: 120,
+                        maxWidth: 4096,
+                        maxHeight: 4096,
+                        fillColor: "#fff",
+                        imageSmoothingEnabled: false,
+                        imageSmoothingQuality: "high",
+                      });
+                      const preview =
+                        Swal.getHtmlContainer().querySelector("#preview");
+                      preview.src = croppedCanvas.toDataURL();
+                      croppedCanvas.toBlob((blob) => {
+                        imgFile2 = blob;
+                        imgFile2.name = "profile";
+                      });
+                      return imgFile2;
+                    }, 25);
+                  },
+                });
+                Swal.getHtmlContainer().querySelector("#editbtn").onclick =
+                  function () {
+                    if (cropopen == 0) {
+                      Swal.getHtmlContainer().querySelector(
+                        ".cropperdiv"
+                      ).style.display = "block";
+                      cropopen = 1;
+                    } else {
+                      cropopen = 0;
+                      Swal.getHtmlContainer().querySelector(
+                        ".cropperdiv"
+                      ).style.display = "none";
+                    }
+                  };
 
-                  Swal.getHtmlContainer().querySelector("#cropperjs").src =
-                    Swal.getHtmlContainer().querySelector("#formFile").value;
-                };
-            },
-          });
+                Swal.getHtmlContainer().querySelector("#formFile").onchange =
+                  function () {
+                    console.log("File Uploaded");
+                    var imgFile =
+                      Swal.getHtmlContainer().querySelector("#formFile")
+                        .files[0];
+                    const reader = new FileReader();
+                    reader.addEventListener(
+                      "load",
+                      function () {
+                        // convert image file to base64 string
+                        //image.src = reader.result;
+                        cropper.replace(reader.result);
+                      },
+                      false
+                    );
+                    if (imgFile) {
+                      reader.readAsDataURL(imgFile);
+                    }
+                  };
+              },
+            })
+            .then((result) => {
+              if (result.isConfirmed) {
+                const cropimg = imgFile2;
+                const path = userImageFolderStr + cropimg.name;
+                const storageRef = ref(storage, path);
+                const uploadTask = uploadBytesResumable(storageRef, cropimg);
+                uploadTask.on(
+                  "state_changed",
+                  (snapshot) => {
+                    switch (snapshot.state) {
+                      case "paused":
+                        console.log("Upload is paused");
+                        break;
+                      case "running":
+                        console.log("Upload is running");
+                        break;
+                    }
+                  },
+                  (error) => {
+                    // A full list of error codes is available at
+                    // https://firebase.google.com/docs/storage/web/handle-errors
+                    switch (error.code) {
+                      case "storage/unauthorized":
+                        // User doesn't have permission to access the object
+                        break;
+                      case "storage/canceled":
+                        // User canceled the upload
+                        break;
+
+                      // ...
+
+                      case "storage/unknown":
+                        // Unknown error occurred, inspect error.serverResponse
+                        break;
+                    }
+                  },
+                  () => {
+                    // Upload completed successfully, now we can get the download URL
+                    getDownloadURL(uploadTask.snapshot.ref).then(
+                      (downloadURL) => {
+                        updateProfile(curuser, {
+                          photoURL: downloadURL,
+                        })
+                          .then(() => {})
+                          .catch((error) => {});
+                      }
+                    );
+                  }
+                );
+              }
+            })
+            .catch((err) => {});
         };
 
         document.getElementById("btndelete").onclick = function () {
