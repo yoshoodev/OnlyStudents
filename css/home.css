@@ -11732,14 +11732,6 @@ main {
     padding-right: 3rem;
   }
 
-  #onlystudentslogo {
-    -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
-    cursor: default;
-  }
-
   #menuitems {
     display: flex !important;
     opacity: 100 !important;

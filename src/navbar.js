@@ -726,6 +726,7 @@ document.getElementById("menuitems").addEventListener("animationend", () => {
 document.getElementById("onlystudentslogo").onclick = function () {
   const vw = window.innerWidth;
   if (vw > 576) {
+    window.location.href("/home.html");
   } else {
     if (logoOpen == false) {
       logoOpen = true;
