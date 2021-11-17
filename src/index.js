@@ -216,7 +216,8 @@ function validateEmptyFormReg() {
 document.getElementById("registerbtn").onclick = function () {
   var email = document.getElementById("registeremailform").value;
   var email2 = document.getElementById("registeremailrepeat").value;
-  var username = document.getElementById("userform").value;
+  var usernameBefore = document.getElementById("userform").value;
+  var username = new String(usernameBefore.toLowerCase());
   var name = document.getElementById("nameform").value;
   var password = document.getElementById("password1").value;
   var password2 = document.getElementById("password2").value;
@@ -229,8 +230,7 @@ document.getElementById("registerbtn").onclick = function () {
     redirect();
     // ...
   } else {
-    console.log("User is not signed-in, account creation possible");
-
+    //console.log("User is not signed-in, account creation possible");
     if (validateEmptyFormReg() == true && isUserNameValid(username) == true) {
       comingfromreg = 1;
       createUserWithEmailAndPassword(auth, email, password)

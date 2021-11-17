@@ -769,7 +769,9 @@ document.getElementById("profilepicture").onclick = function () {
         };
 
         function updateSVBTN() {
-          const uname = document.getElementById("uname").value;
+          const unameBefore = document.getElementById("uname").value;
+          const uname = new String(unameBefore.toLowerCase());
+          //console.log(uname);
           const name = document.getElementById("namef").value;
           const email = document.getElementById("email").value;
           const good = isUserNameValid(uname);
@@ -806,13 +808,13 @@ document.getElementById("profilepicture").onclick = function () {
           }
         }
 
-        document.getElementById("namef").onkeyup = function () {
+        document.getElementById("namef").onchange = function () {
           updateSVBTN();
         };
-        document.getElementById("uname").onkeyup = function () {
+        document.getElementById("uname").onchange = function () {
           updateSVBTN();
         };
-        document.getElementById("email").onkeyup = function () {
+        document.getElementById("email").onchange = function () {
           updateSVBTN();
         };
       },
@@ -830,7 +832,8 @@ document.getElementById("profilepicture").onclick = function () {
     })
     .then((result) => {
       if (result.isConfirmed) {
-        const uname = document.getElementById("uname").value;
+        const unameBefore = document.getElementById("uname").value;
+        const uname = new String(unameBefore.toLowerCase());
         const name = document.getElementById("namef").value;
         const email = document.getElementById("email").value;
         const good = isUserNameValid(uname);
