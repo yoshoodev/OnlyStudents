@@ -49,6 +49,7 @@ var osuser = new OUser();
 var curuser = null;
 var localuid = null;
 var profilepic = null;
+var logoOpen = false;
 
 // Initialize Authentication observer and log-out users if != present
 onAuthStateChanged(auth, (user) => {
@@ -118,7 +119,7 @@ barba.hooks.after(() => {
   newScript.className = "main-script";
   oldScript.remove();
   bottomDOM.appendChild(newScript);
-  console.log("Re-initialized script");
+  console.log("Re-initialized script on page change");
 });
 
 //
@@ -705,4 +706,42 @@ document.getElementById("profilepicture").onclick = function () {
       }
     })
     .catch((err) => {});
+};
+
+document.getElementById("menuitems").addEventListener("animationend", () => {
+  document
+    .getElementById("menuitems")
+    .classList.remove("animate__fadeInDown", "animate__fadeOutUp");
+  if (logoOpen == false) {
+    document
+      .getElementById("menuitems")
+      .setAttribute("style", "display: none; opacity: 0;");
+  } else if (logoOpen == true) {
+    document
+      .getElementById("menuitems")
+      .setAttribute("style", "display: flex; opacity: 100;");
+  }
+});
+
+document.getElementById("onlystudentslogo").onclick = function () {
+  const vw = window.innerWidth;
+  if (vw > 576) {
+  } else {
+    if (logoOpen == false) {
+      logoOpen = true;
+      document
+        .getElementById("menuitems")
+        .setAttribute("style", "display: flex; opacity: 100;");
+      document
+        .getElementById("menuitems")
+        .style.setProperty("--animate-duration", "1s");
+      document.getElementById("menuitems").classList.add("animate__fadeInDown");
+    } else {
+      logoOpen = false;
+      document
+        .getElementById("menuitems")
+        .style.setProperty("--animate-duration", "1s");
+      document.getElementById("menuitems").classList.add("animate__fadeOutUp");
+    }
+  }
 };

@@ -11461,6 +11461,7 @@ main {
   flex-direction: column;
   justify-items: start;
   align-items: center;
+  z-index: 2;
 }
 
 .container-fluid, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
@@ -11487,6 +11488,7 @@ main {
   min-height: 45px;
   margin-top: 0.25rem !important;
   margin-bottom: 0.25rem !important;
+  z-index: 2;
 }
 
 .logo {
@@ -11728,6 +11730,19 @@ main {
   .card-deck .card {
     padding-left: 3rem;
     padding-right: 3rem;
+  }
+
+  #onlystudentslogo {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    cursor: default;
+  }
+
+  #menuitems {
+    display: flex !important;
+    opacity: 100 !important;
   }
 }
 .card-deck > .card {
@@ -12213,4 +12228,8 @@ body {
   margin-top: 1rem;
   min-width: 40vw;
   min-height: 30vh;
+}
+
+#menuitems {
+  display: none;
 }/*# sourceMappingURL=home.css.map */
