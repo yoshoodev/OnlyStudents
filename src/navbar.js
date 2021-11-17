@@ -110,7 +110,7 @@ onAuthStateChanged(auth, (user) => {
       });
     }
 
-    asyncCheckUEAS(osuser, user.uid)
+    asyncCheckUEAS(osuser, user)
       .then((result) => {
         osuser = result;
       })
@@ -224,14 +224,29 @@ function deleteSavedUser(uid) {
   }
 }
 
-async function asyncCheckUEAS(userobj = new OUser(), uid) {
-  if (checkSavedUser(uid) == true) {
-    const userobjwait = await importUFLS(uid);
+async function asyncCheckUEAS(userobj = new OUser(), user) {
+  if (checkSavedUser(user.uid) == true) {
+    console.log("SAVED BEFORE CHECK");
+    const userobjwait = await importUFLS(user.uid);
     userobj = userobjwait;
-    return userobj;
+    console.log(user.displayName, user.email);
+    console.log("OBJ:", userobj);
+    if (user.displayName == userobj.username && user.email == userobj.email) {
+      console.log("Data is identical");
+      return userobj;
+    } else {
+      console.log("Data is mismatched, reloading from DB");
+      userobj = null;
+      const userobjwait = await getUserFromDB(user.uid);
+      saveUserToLS(userobjwait, user.uid);
+      userobj = userobjwait;
+      console.log("New UserObj:", userobj);
+      return userobj;
+    }
   } else {
-    const userobjwait = await getUserFromDB(uid);
-    saveUserToLS(userobjwait, uid);
+    console.log("GETTING DB");
+    const userobjwait = await getUserFromDB(user.uid);
+    saveUserToLS(userobjwait, user.uid);
     userobj = userobjwait;
     return userobj;
   }
@@ -279,14 +294,14 @@ function isUserNameValid(username) {
   }
 }
 
-async function updateUserDB(uid, name, username, email) {
+async function updateUserDB(uid, nameA, usernameA, emailA) {
   const docRef = doc(db, "users", uid);
 
   // Set the "capital" field of the city 'DC'
   await updateDoc(docRef, {
-    name: name,
-    username: username,
-    email: email,
+    email: emailA,
+    name: nameA,
+    username: usernameA,
   });
 }
 
@@ -770,7 +785,7 @@ document.getElementById("profilepicture").onclick = function () {
 
         function updateSVBTN() {
           const unameBefore = document.getElementById("uname").value;
-          const uname = new String(unameBefore.toLowerCase());
+          const uname = unameBefore.toLowerCase();
           //console.log(uname);
           const name = document.getElementById("namef").value;
           const email = document.getElementById("email").value;
@@ -833,7 +848,7 @@ document.getElementById("profilepicture").onclick = function () {
     .then((result) => {
       if (result.isConfirmed) {
         const unameBefore = document.getElementById("uname").value;
-        const uname = new String(unameBefore.toLowerCase());
+        const uname = unameBefore.toLowerCase();
         const name = document.getElementById("namef").value;
         const email = document.getElementById("email").value;
         const good = isUserNameValid(uname);
