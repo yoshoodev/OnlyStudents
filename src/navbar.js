@@ -406,6 +406,7 @@ document.getElementById("profilepicture").onclick = function () {
           profilePicSwal
             .fire({
               title: "Edit Profile Picture",
+              backdrop: true,
               html: `<img id="preview" src="">
             <div class="cropperdiv" style="display: none"><input class="form-control" type="file" id="formFile" accept="image/png, image/gif, image/jpeg, image/svg"></input><div class="cropdiv"><img id="cropimg"></img></div></div>
             <button id="editbtn" class="btn btn-primary">Change Photo</button>
@@ -448,27 +449,30 @@ document.getElementById("profilepicture").onclick = function () {
                         imageSmoothingEnabled: false,
                         imageSmoothingQuality: "high",
                       });
-                      const preview =
-                        Swal.getHtmlContainer().querySelector("#preview");
-                      preview.src = croppedCanvas.toDataURL();
-                      croppedCanvas.toBlob((blob) => {
-                        imgFile2 = blob;
-                        imgFile2.name = "profile";
-                      });
-                      return imgFile2;
+                      if (cropopen == 1) {
+                        const preview =
+                          Swal.getHtmlContainer().querySelector("#preview");
+                        preview.src = croppedCanvas.toDataURL();
+                        croppedCanvas.toBlob((blob) => {
+                          imgFile2 = blob;
+                          imgFile2.name = "profile";
+                        });
+                        return imgFile2;
+                      }
                     }, 25);
                   },
                 });
                 cropper.disable();
                 Swal.getHtmlContainer().querySelector("#editbtn").onclick =
                   function () {
+                    cropper.disable();
                     if (cropopen == 0) {
+                      cropopen = 1;
                       Swal.getHtmlContainer().querySelector(
                         ".cropperdiv"
                       ).style.display = "flex";
                       cropper.enable();
                       Swal.disableButtons();
-                      cropopen = 1;
                     } else {
                       cropopen = 0;
                       Swal.getHtmlContainer().querySelector(

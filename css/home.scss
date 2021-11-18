@@ -954,8 +954,8 @@ body {
 }
 
 #preview {
-  width: 120px;
-  height: 120px;
+  min-width: 60px;
+  min-height: 60px;
   border-radius: 1000rem;
   margin-bottom: 0.5rem;
 }
@@ -977,8 +977,8 @@ body {
 }
 
 #preview {
-  width: 120px;
-  height: 120px;
+  max-width: 120px;
+  max-height: 120px;
   margin-bottom: 10px;
   border-radius: 100%;
   border-width: 3px;
