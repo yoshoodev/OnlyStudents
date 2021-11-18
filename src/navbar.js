@@ -491,6 +491,7 @@ document.getElementById("profilepicture").onclick = function () {
                       "style",
                       "background-color: #419d78 !important"
                     );
+                    Swal.getCancelButton().style.display = "inline-block";
                     //console.log("File Uploaded");
                     var imgFile =
                       Swal.getHtmlContainer().querySelector("#formFile")
