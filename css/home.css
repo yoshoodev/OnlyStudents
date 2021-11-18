@@ -11615,10 +11615,11 @@ main {
 }
 
 .profilepicswal:hover {
-  transform: scale(1.2);
+  transform: scale(1.25);
   transition: all ease-in 0.2s;
-  box-shadow: rgba(213, 41, 65, 0.2) 0px 0px 10px 4px;
+  box-shadow: rgba(213, 41, 65, 0.2) 0px 0px 4px 1px;
   border-color: #d52941;
+  z-index: 4;
 }
 
 #btnsave {
@@ -12289,4 +12290,13 @@ body {
   outline: none;
   box-shadow: none;
   background-color: #cca046;
+}
+
+#profilepicture {
+  margin-right: 0.5em !important;
+}
+
+.form-control:hover {
+  border-color: #3b7db3;
+  box-sizing: border-box !important;
 }/*# sourceMappingURL=home.css.map */
