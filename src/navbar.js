@@ -459,18 +459,23 @@ document.getElementById("profilepicture").onclick = function () {
                     }, 25);
                   },
                 });
+                cropper.disable();
                 Swal.getHtmlContainer().querySelector("#editbtn").onclick =
                   function () {
                     if (cropopen == 0) {
                       Swal.getHtmlContainer().querySelector(
                         ".cropperdiv"
                       ).style.display = "flex";
+                      cropper.enable();
+                      Swal.disableButtons();
                       cropopen = 1;
                     } else {
                       cropopen = 0;
                       Swal.getHtmlContainer().querySelector(
                         ".cropperdiv"
                       ).style.display = "none";
+                      cropper.disable();
+                      Swal.enableButtons();
                     }
                   };
 
@@ -501,6 +506,23 @@ document.getElementById("profilepicture").onclick = function () {
                     }
                   };
               },
+              allowOutsideClick: () => {
+                const popup = Swal.getPopup();
+                popup.classList.remove("swal2-show");
+                setTimeout(() => {
+                  popup.classList.add(
+                    "animate__animated",
+                    "animate__headShake"
+                  );
+                });
+                setTimeout(() => {
+                  popup.classList.remove(
+                    "animate__animated",
+                    "animate__headShake"
+                  );
+                }, 500);
+                return false;
+              },
             })
             .then((result) => {
               if (result.isConfirmed && pchange == 1) {
@@ -508,6 +530,7 @@ document.getElementById("profilepicture").onclick = function () {
                 const path = userImageFolderStr + cropimg.name;
                 const storageRef = ref(storage, path);
                 const uploadTask = uploadBytesResumable(storageRef, cropimg);
+                Swal.close();
                 Swal.fire({
                   title: "Icon Change Success",
                   html: "Reloading page when complete.",
