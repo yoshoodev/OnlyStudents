@@ -215,12 +215,10 @@ function validateEmptyFormReg() {
 
 document.getElementById("registerbtn").onclick = function () {
   var email = document.getElementById("registeremailform").value;
-  var email2 = document.getElementById("registeremailrepeat").value;
   var usernameBefore = document.getElementById("userform").value;
   var username = usernameBefore.toLowerCase();
   var name = document.getElementById("nameform").value;
   var password = document.getElementById("password1").value;
-  var password2 = document.getElementById("password2").value;
 
   if (userauth != null) {
     // User is signed in, see docs for a list of available properties
@@ -230,7 +228,6 @@ document.getElementById("registerbtn").onclick = function () {
     redirect();
     // ...
   } else {
-    //console.log("User is not signed-in, account creation possible");
     if (validateEmptyFormReg() == true && isUserNameValid(username) == true) {
       comingfromreg = 1;
       createUserWithEmailAndPassword(auth, email, password)
@@ -449,8 +446,8 @@ document.getElementById("frgtpsswd").onclick = function () {
   }
 };
 
-const node = document.getElementById("passwordform");
-node.addEventListener("keyup", ({ key }) => {
+const pwform = document.getElementById("passwordform");
+pwform.addEventListener("keyup", ({ key }) => {
   if (key === "Enter") {
     //event.preventDefault();
     document.getElementById("loginbtn").click();
