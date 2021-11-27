@@ -625,7 +625,7 @@ main {
 
 .sidebar {
   //position: sticky;
-  overflow: scroll;
+  overflow: hidden !important;
   scrollbar-width: 0 !important;
   width: 15.3rem !important;
   display: flex;
@@ -634,10 +634,6 @@ main {
   justify-content: flex-start;
   align-items: flex-end;
   flex-shrink: 0;
-}
-
-.sidebar::-webkit-scrollbar {
-  display: none;
 }
 
 @media (max-width: 576px) {
@@ -711,7 +707,6 @@ main {
   display: flex;
   flex-grow: 1;
   overflow-x: hidden;
-  overflow-y: scroll !important;
   max-height: 85vh;
   position: absolute;
   width: 100%;
@@ -783,8 +778,8 @@ body {
   flex-direction: column;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
   transition: all ease-out 0.4s;
 }
 
@@ -903,6 +898,7 @@ body {
   border-radius: 2rem;
   margin-left: 1rem;
   margin-right: 1rem;
+  transition: all ease-out 0.4s;
 }
 
 .specialintrocard:hover {
@@ -933,7 +929,12 @@ body {
 
 #photobtnsp h1 {
   color: $red;
+  //margin-top: 1.8rem;
   font-size: 3rem;
+}
+
+#photobtnsp svg {
+  max-height: 70%;
 }
 
 #videobtnsp h1 {
@@ -943,6 +944,7 @@ body {
 }
 
 #videobtnsp svg {
+  max-height: 55%;
   fill: $blue;
 }
 

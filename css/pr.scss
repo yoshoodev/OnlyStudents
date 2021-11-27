@@ -32,6 +32,7 @@
   }
 }
 
+@import "../node_modules/bootstrap/scss/functions";
 // VARIABLES
 
 $font-family-base: Minion;
@@ -43,9 +44,14 @@ $white: #f3f3f3;
 $blue: #5295cb;
 
 // IMPORT BOOTSTRAP HERE
-
-@import "../node_modules/bootstrap/scss/bootstrap";
-
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/forms";
+@import "../node_modules/bootstrap/scss/card";
+@import "../node_modules/bootstrap/scss/buttons";
+@import "../node_modules/bootstrap/scss/utilities";
+@import "../node_modules/bootstrap/scss/utilities/api";
+@import "../node_modules/bootstrap/scss/reboot";
 // CUSTOM CSS AFTER BOOTSTRAP (use !important for override)
 
 // SCROLLBAR
@@ -119,20 +125,21 @@ form {
 }
 
 .form-control {
-  transition: all 1s ease-out;
+  margin-top: 1rem;
+  transition: all 0.5s ease-out;
   height: 2.5rem;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 .form-control:focus {
   box-shadow: inset 0px 0px 0px 2px $red;
-  transition: all ease-in-out 0.3s;
+  transition: all ease-in 0.3s;
   border-style: none;
   border-color: $red;
 }
 
 .form-control:hover {
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in;
   box-shadow: inset 0px 0px 0px 2px $red;
   border-style: none;
   border-color: $red;
