@@ -643,29 +643,20 @@ main {
   .maincontentdeck {
     flex-direction: column;
     width: 100%;
+    height: 100%;
     flex-grow: 1;
     flex-wrap: nowrap !important;
     justify-content: center !important;
     align-items: center !important;
     margin-right: 0 !important;
     padding-right: 0 !important;
-    overflow-x: hidden !important;
   }
   .maincontentdeck > .cardwrap > .card {
     max-width: 80vw;
     max-height: 45vw;
   }
   [data-barba-namespace="special"] {
-    max-height: 56vh !important;
-    overflow-x: hidden !important;
-    overflow-y: scroll;
     min-height: 0 !important;
-
-    overflow: scroll !important;
-  }
-  body {
-    overflow-y: scroll !important;
-    overflow-x: hidden;
   }
 }
 
@@ -706,7 +697,6 @@ main {
 [data-barba-namespace="special"] {
   display: flex;
   flex-grow: 1;
-  overflow-x: hidden;
   max-height: 85vh;
   position: absolute;
   width: 100%;
