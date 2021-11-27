@@ -31,9 +31,8 @@ document.getElementById("rst").onclick = function () {
       confirmButtonText: "I will fix it !",
     });
   } else {
-    if (pass1 == pass2) {
+    if (pass1 === pass2) {
       const queryString = window.location.search;
-      console.log(queryString);
       const urlParams = new URLSearchParams(queryString);
       if (!!queryString) {
         console.log("NOT NULL");
@@ -161,7 +160,7 @@ document.getElementById("rst").onclick = function () {
       } else {
         Swal.fire({
           title: "No Parameters In URL",
-          text: "Where did you come from here ?",
+          text: "Where did you come from ?",
           icon: "error",
           showCancelButton: false,
           confirmButtonText: "IDK",

@@ -11344,6 +11344,7 @@ main {
   justify-content: center !important;
   align-items: center !important;
   align-content: center;
+  height: 100vh;
 }
 
 .card {
