@@ -657,6 +657,11 @@ main {
   }
   [data-barba-namespace="special"] {
     min-height: 0 !important;
+    height: auto !important;
+    max-height: unset !important;
+  }
+  .maincontent {
+    overflow-y: hidden !important;
   }
 }
 
@@ -708,7 +713,7 @@ main {
   display: flex;
   flex-wrap: wrap;
   padding-bottom: 1rem;
-  overflow-y: scroll !important;
+  overflow-y: scroll;
   overflow-x: hidden;
 }
 
@@ -835,7 +840,6 @@ body {
   display: flex;
   justify-content: center;
   align-content: center;
-  padding-top: 5px;
   height: 2.5rem;
   width: 2.5rem;
   background-color: $primary;
@@ -852,7 +856,6 @@ body {
 }
 
 .vddwn svg {
-  transform: scale(1.1);
   fill: $white;
 }
 
@@ -863,10 +866,6 @@ body {
   justify-content: center;
   align-items: center;
   height: 84vh;
-}
-
-body {
-  overflow: hidden;
 }
 
 .cardwrapspecial {
